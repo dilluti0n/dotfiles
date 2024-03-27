@@ -1,0 +1,12 @@
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+	ui = true
+	pager = true
+[user]
+	email = hskimse1@gmail.com
+	name = dilluti0n
+[core]
+	editor = vim

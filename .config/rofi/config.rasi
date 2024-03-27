@@ -1,0 +1,12 @@
+configuration {
+ modi: "window,drun,ssh,combi";
+ font: "Iosevka 10";
+ combi-modi: "window,drun,ssh";
+ show-icons: true;
+}
+//@theme "/home/hskim/.local/share/rofi/themes/nord-oneline.rasi"
+//@theme "/home/hskim/.local/share/rofi/themes/nord.rasi"
+//@theme "/home/hskim/.local/share/rofi/themes/nord-twoLines.rasi"
+//@theme "/home/hskim/.local/share/rofi/themes/nord-oneline.rasi"
+//@theme "/home/hskim/.local/share/rofi/themes/nord.rasi"
+@theme "/usr/share/rofi/themes/dmenu.rasi"
