@@ -1,8 +1,0 @@
-.bashrc
-.config/i3/config
-.config/alacritty/alacritty.toml
-.config/rofi/config.rasi
-.gitconfig
-.vimrc
-.xprofile
-.zshrc
