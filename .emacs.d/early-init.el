@@ -1,1 +1,5 @@
 (setenv "LSP_USE_PLISTS" "true")
+(if (eq system-type 'darwin)
+    (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin")))
+(if (eq system-type 'darwin)
+    (setq exec-path (append exec-path '("/usr/local/bin"))))
