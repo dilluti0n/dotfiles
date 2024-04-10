@@ -1,4 +1,5 @@
 ;; [appearence]
+;; startup
 (setq inhibit-startup-screen t)
 (setq backup-directory-alist '(("." . "~/.emacs_saves")))
 (setq select-enable-clipboard t)
@@ -7,14 +8,20 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (ido-mode 1)
+;; font
 (defun m/get-default-font ()
   (cond
    ((eq system-type 'darwin) "Menlo-18")
    ((eq system-type 'gnu/linux) "iosevka-20")))
 (add-to-list 'default-frame-alist `(font . ,(m/get-default-font)))
 (setq-default line-spacing 2)
-(global-display-line-numbers-mode t)
-(setq display-line-numbers-type 'relative)
+;; line-number
+(add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode)))
+(add-hook 'dired-mode-hook (lambda () (display-line-numbers-mode)))
+(setq-default display-line-numbers-type 'relative)
+;; column-indicater (ruler)
+(add-hook 'prog-mode-hook (lambda () (display-fill-column-indicator-mode)))
+(setq-default display-fill-column-indicator-column 81)
 (setq column-number-mode 1)
 
 ;; [tabs, indents]
@@ -34,6 +41,19 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
+;; Dired-mode
+(require 'dired)
+(defun dired-do-local-command ()
+  "Do local command on remote connection"
+  (interactive)
+  (let* ((marked-files (dired-get-marked-files nil current-prefix-arg))
+         (local-tmp-files (mapcar #'file-local-copy marked-files))
+         (num-files (length local-tmp-files))
+         (default-directory temporary-file-directory)
+         (command (dired-read-shell-command "! on %s: " num-files marked-files)))
+    (dired-do-shell-command command num-files local-tmp-files)))
+(define-key dired-mode-map (kbd "\"") 'dired-do-local-command)
+
 (use-package magit
   :ensure t)
 
@@ -48,88 +68,5 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 ;; (load-theme 'BBEdit-Light t)
 
-(use-package eglot
-  :ensure t
-  :hook ((c-mode c++-mode) . eglot-ensure)
-  :config
-  (setq eglot-shutdown t)
-  ;; eldoc
-  (setq eldoc-echo-area-use-multiline-p nil)
-  (setq eldoc-idle-delay 0.1)
-  ;; keymap
-  (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename)
-  (define-key eglot-mode-map (kbd "C-c o") 'eglot-code-action-organize-imports)
-  (define-key eglot-mode-map (kbd "C-c h") 'eldoc)
-  (define-key eglot-mode-map (kbd "<f6>" ) 'xref-find-definitions)
-  ;; optimization
-  (setq eglot-events-buffer-size 0)
-  (setq read-process-output-max (* 1024 1024))
-  (setq gc-cons-threshold 100000000)
-  )
-
-(use-package flymake
-  :config
-  (define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
-  (define-key flymake-mode-map (kbd "M-p") 'flymake-goto-prev-error)
-  )
-
-(use-package flycheck-eglot
-  :ensure t
-  :after (flycheck)
-  :custom (flycheck-eglot-exclusive nil)
-  :config (flycheck-eglot-mode 1))
-
-;; (use-package yasnippet
-;;   :ensure t
-;;   :hook
-;;   (prog-mode . yas-global-mode)
-;;   )
-
-(use-package lsp-mode
-  :ensure t
-  :requires (lsp-ui)
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook
-  (c-mode . (lambda () (unless (file-remote-p default-directory)
-                         (lsp-deferred))))
-  (lsp-mode . lsp-ui-mode)
-  ;; (lsp-mode . lsp-enable-which-key-integration)
-  :commands (lsp lsp-deferred)
-  :config
-  ;; Do not draw header line
-  (setq lsp-headerline-breadcrumb-enable nil)
-  ;; Optimization
-  (setq read-process-output-max (* 1024 1024))
-  (setq lsp-use-plists t)
-  (setq lsp-log-io nil)
-  (setq gc-cons-threshold 100000000)
-  (lsp-register-client
-   (make-lsp-client
-    :new-connection (lsp-stdio-connection "clangd")
-    :major-modes '(c-mode c++-mode)
-    :remote? nil
-    :server-id 'clangd))
-  )
-
-(use-package lsp-ui
-  :ensure t
-  :custom
-  (lsp-ui-sideline-enable t)
-  (lsp-ui-sideline-show-diagnostics nil)
-  (lsp-ui-sideline-delay 0.1)
-  (lsp-ui-sideline-show-hover t)
-  (lsp-ui-sideline-update-mode t)
-  )
-
-(use-package flycheck
-  :ensure t)
-
-(use-package highlight-numbers-mode
-  :hook (prog-mode . highlight-numbers-mode))
-
-(use-package company
-  :ensure t
-  :hook (prog-mode . company-mode)
-  )
+(load "~/.emacs.d/pack/eglot.el")
+;; (load "~/.emacs.d/pack/lsp-mode.el")
