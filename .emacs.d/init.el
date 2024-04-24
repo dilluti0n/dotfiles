@@ -4,14 +4,20 @@
 (setq backup-directory-alist '(("." . "~/.emacs_saves")))
 (setq select-enable-clipboard t)
 (setq split-width-threshold nil)
+(add-to-list 'display-buffer-alist
+             '("\\*xref\\*"
+               (display-buffer-in-side-window)
+               (window-height . 0.3)
+               (side . bottom)))
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
-(ido-mode 1)
+;; (ido-mode 1)
+
 ;; font
 (defun m/get-default-font ()
   (cond
-   ((eq system-type 'darwin) "Menlo-18")
+   ((eq system-type 'darwin) "Menlo-16")
    ((eq system-type 'gnu/linux) "iosevka-20")))
 (add-to-list 'default-frame-alist `(font . ,(m/get-default-font)))
 (setq-default line-spacing 2)
@@ -23,6 +29,9 @@
 (add-hook 'prog-mode-hook (lambda () (display-fill-column-indicator-mode)))
 (setq-default display-fill-column-indicator-column 81)
 (setq column-number-mode 1)
+;; show useless whitespace
+(add-hook 'prog-mode-hook (lambda ()
+                            (setq-default show-trailing-whitespace t)))
 
 ;; [tabs, indents]
 (setq-default tab-width 8
@@ -32,6 +41,8 @@
 
 ;; [packages]
 (require 'package)
+(add-to-list 'package-archives
+             '("gnu" . "https://elpa.gnu.org/") t)
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
@@ -60,10 +71,29 @@
 (use-package highlight-numbers
   :ensure t)
 
-(use-package gruber-darker-theme
+;; (use-package gruber-darker-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'gruber-darker t))
+
+(use-package zenburn-theme
   :ensure t
   :config
-  (load-theme 'gruber-darker t))
+  (load-theme 'zenburn t))
+
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1))
+
+(use-package swiper
+  :ensure t
+  :after ivy)
+
+(use-package counsel
+  :ensure t
+  :config
+  (counsel-mode 1))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 ;; (load-theme 'BBEdit-Light t)
