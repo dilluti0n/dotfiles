@@ -8,11 +8,19 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (ido-mode 1)
+;; transparancy
+(set-frame-parameter nil 'alpha-background 90)
+(add-to-list 'default-frame-alist '(alpha-background . 90))
+(defun set-alpha (value)
+  "Sets the transparency of the frame window. 0=transparent/100=opaque"
+  (interactive "nTransparency Value 0 - 100 opaque:")
+  (set-frame-parameter (selected-frame) 'alpha-background value))
+
 ;; font
 (defun m/get-default-font ()
   (cond
    ((eq system-type 'darwin) "Menlo-18")
-   ((eq system-type 'gnu/linux) "iosevka-20")))
+   ((eq system-type 'gnu/linux) "iosevka-12")))
 (add-to-list 'default-frame-alist `(font . ,(m/get-default-font)))
 (setq-default line-spacing 2)
 ;; line-number
@@ -20,8 +28,8 @@
 (add-hook 'dired-mode-hook (lambda () (display-line-numbers-mode)))
 (setq-default display-line-numbers-type 'relative)
 ;; column-indicater (ruler)
-(add-hook 'prog-mode-hook (lambda () (display-fill-column-indicator-mode)))
-(setq-default display-fill-column-indicator-column 81)
+;; (add-hook 'prog-mode-hook (lambda () (display-fill-column-indicator-mode)))
+;; (setq-default display-fill-column-indicator-column 81)
 (setq column-number-mode 1)
 
 ;; [tabs, indents]
@@ -60,10 +68,11 @@
 (use-package highlight-numbers
   :ensure t)
 
-(use-package gruber-darker-theme
+(use-package zenburn-theme
   :ensure t
   :config
-  (load-theme 'gruber-darker t))
+  (load-theme 'zenburn t)
+  )
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 ;; (load-theme 'BBEdit-Light t)
