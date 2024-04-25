@@ -1,6 +1,6 @@
 (use-package eglot
   :ensure t
-  :hook ((c-mode c++-mode) . eglot-ensure)
+  :hook ((c-mode c-ts-mode c++-ts-mode c++-mode) . eglot-ensure)
   :config
   (setq eglot-shutdown t)
   ;; eldoc

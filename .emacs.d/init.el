@@ -49,9 +49,14 @@
 (add-hook 'prog-mode-hook (lambda ()
                             (setq-default show-trailing-whitespace t)))
 
-;; [tabs, indents]
+;; [tabs, indents, prog-mode]
 (setq-default tab-width 8
 	      indent-tabs-mode nil)
+(treesit-available-p)
+(add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+(add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+(add-to-list 'major-mode-remap-alist
+             '(c-or-c++-mode . c-or-c++-ts-mode))
 (setq c-default-style "k&r"
       c-basic-offset 4)
 
