@@ -4,18 +4,27 @@
 (setq backup-directory-alist '(("." . "~/.emacs_saves")))
 (setq select-enable-clipboard t)
 (setq split-width-threshold nil)
-(add-to-list 'display-buffer-alist
-             '("\\*xref\\*"
-               (display-buffer-in-side-window)
-               (window-height . 0.3)
-               (side . bottom)))
+
+(defun m/set-buffer-pop-height (buffer-name height)
+  (add-to-list 'display-buffer-alist
+               `(,buffer-name
+                 (display-buffer-in-side-window)
+                 `(window-height . ,height)
+                 (side . bottom))))
+
+(m/set-buffer-pop-height "\\*xref\\*" 0.3)
+(m/set-buffer-pop-height "\\*eldoc\\*" 0.3)
+(m/set-buffer-pop-height "\\*magit*\\*" 0.3)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 ;; (ido-mode 1)
 ;; transparancy
-(set-frame-parameter nil 'alpha-background 90)
-(add-to-list 'default-frame-alist '(alpha-background . 90))
+(defun t/alpha-init ()
+  (set-frame-parameter nil 'alpha-background 90)
+  (add-to-list 'default-frame-alist '(alpha-background . 90))
+  )
+(if (eq system-type 'gnu/linux) (t/alpha-init))
 (defun set-alpha (value)
   "Sets the transparency of the frame window. 0=transparent/100=opaque"
   (interactive "nTransparency Value 0 - 100 opaque:")
