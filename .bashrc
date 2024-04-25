@@ -7,4 +7,5 @@
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-PS1='[\u@\h \W]\$ '
+PS1='[\u@\h \[\e[32m\]\W\[\e[m\]]\$ '
+export PATH="$HOME/bin:$PATH"
