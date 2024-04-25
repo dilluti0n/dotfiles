@@ -1,9 +1,14 @@
 ;; [appearence]
 ;; startup
-(setq inhibit-startup-screen t)
-(setq backup-directory-alist '(("." . "~/.emacs_saves")))
-(setq select-enable-clipboard t)
-(setq split-width-threshold nil)
+(setq inhibit-startup-screen t
+      backup-directory-alist '(("." . "~/.emacs_saves"))
+      select-enable-clipboard t
+      split-width-threshold nil
+      )
+
+;; load custom ... stuffs on custom.el instead of init.el
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
 
 (defun m/set-buffer-pop-height (buffer-name height)
   (add-to-list 'display-buffer-alist
@@ -87,9 +92,6 @@
 (define-key dired-mode-map (kbd "\"") 'dired-do-local-command)
 
 (use-package magit
-  :ensure t)
-
-(use-package highlight-numbers
   :ensure t)
 
 ;; (use-package gruber-darker-theme

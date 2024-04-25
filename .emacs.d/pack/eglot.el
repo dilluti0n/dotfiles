@@ -33,9 +33,6 @@
   (prog-mode . yas-global-mode)
   )
 
-(use-package highlight-numbers-mode
-  :hook (prog-mode . highlight-numbers-mode))
-
 (use-package company
   :ensure t
   :hook (prog-mode . company-mode)
