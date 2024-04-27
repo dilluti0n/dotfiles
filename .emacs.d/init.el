@@ -39,10 +39,10 @@
         "Toggles the transparency between opaque and current value"
         (interactive)
         (if (= (frame-parameter nil 'alpha-background) 100)
-            (set-alpha m/default-alpha)
+            (alpha-set m/default-alpha)
           (progn
             (setq m/default-alpha (frame-parameter nil 'alpha-background))
-            (set-alpha 100))))
+            (alpha-set 100))))
 
       (global-set-key "\C-c\C-a" 'alpha-toggle)))
 
@@ -62,8 +62,9 @@
 ;; (setq-default display-fill-column-indicator-column 81)
 (setq column-number-mode 1)
 ;; show useless whitespace
-(add-hook 'prog-mode-hook (lambda ()
-                            (setq-default show-trailing-whitespace t)))
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(dolist (hook '(vterm-mode-hook))
+        (add-hook hook (lambda () (setq show-trailing-whitespace nil))))
 
 ;; [tabs, indents, prog-mode]
 (setq-default tab-width 8
@@ -93,8 +94,13 @@
         (c-or-c++-mode . c-or-c++-ts-mode)
         (python-mode . python-ts-mode)
         ))
-(setq c-default-style "k&r"
-      c-basic-offset 4)
+(setq-default c-default-style '((java-mode . "java")
+                                (awk-mode . "awk")
+                                (other . "k&r"))
+              c-basic-offset 4
+              c-ts-mode-indent-offset 'K&R
+              c-ts-mode-indent-offset 4
+              )
 
 ;; [packages]
 (require 'package)
