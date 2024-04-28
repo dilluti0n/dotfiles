@@ -5,9 +5,11 @@ static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const Gap default_gap        = {.isgap = 1, .realgap = 25, .gappx = 25};
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const int topbar = 1;                    /* 0 means bottom bar */
+#define DEFAULT_FONT "monospace:size=10"
+#define TERM_FONT "Iosevka Term:size=10"
+static const char *fonts[]          = { TERM_FONT, DEFAULT_FONT  };
+static const char dmenufont[]       = TERM_FONT;
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
