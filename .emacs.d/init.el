@@ -94,11 +94,9 @@
         (c-or-c++-mode . c-or-c++-ts-mode)
         (python-mode . python-ts-mode)
         ))
-(setq-default c-default-style '((java-mode . "java")
-                                (awk-mode . "awk")
-                                (other . "k&r"))
+(setq-default c-default-style "k&r"
               c-basic-offset 4
-              c-ts-mode-indent-offset 'K&R
+              c-ts-mode-indent-style 'K&R
               c-ts-mode-indent-offset 4
               )
 
@@ -139,18 +137,10 @@
   :config
   (load-theme 'zenburn t))
 
-(use-package ivy
-  :ensure t
-  :config
-  (ivy-mode 1))
-
-(use-package swiper
-  :ensure t
-  :after ivy)
-
 (use-package counsel
   :ensure t
   :config
+  (ivy-mode 1)
   (counsel-mode 1))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
