@@ -4,7 +4,10 @@
       backup-directory-alist '(("." . "~/.emacs_saves"))
       select-enable-clipboard t
       split-width-threshold nil
+      vc-follow-symlinks t
+      default-input-method "korean-hangul"
       )
+(global-set-key (kbd "<S-SPC>") 'toggle-input-method)
 
 ;; load custom ... stuffs on custom.el instead of init.el
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -24,8 +27,7 @@
 (scroll-bar-mode 0)
 ;; (ido-mode 1)
 ;; transparancy
-(if (eq system-type 'gnu/linux)
-    (progn
+(when (eq system-type 'gnu/linux)
       (setq-default m/default-alpha 90)
       (set-frame-parameter nil 'alpha-background m/default-alpha)
       (add-to-list 'default-frame-alist `(alpha-background . ,m/default-alpha))
@@ -44,7 +46,7 @@
             (setq m/default-alpha (frame-parameter nil 'alpha-background))
             (alpha-set 100))))
 
-      (global-set-key "\C-c\C-a" 'alpha-toggle)))
+      (global-set-key "\C-x\C-a" 'alpha-toggle))
 
 ;; font
 (defun m/get-default-font ()
@@ -93,10 +95,11 @@
         (c++-mode . c++-ts-mode)
         (c-or-c++-mode . c-or-c++-ts-mode)
         (python-mode . python-ts-mode)
+        (shell-script-mode . bash-ts-mode)
         ))
 (setq-default c-default-style "k&r"
               c-basic-offset 4
-              c-ts-mode-indent-style 'K&R
+              c-ts-mode-indent-style #'k&r
               c-ts-mode-indent-offset 4
               )
 
@@ -104,6 +107,10 @@
 (require 'package)
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '( "jcs-elpa" . "https://jcs-emacs.github.io/jcs-elpa/packages/") t)
+(setq package-archive-priorities '(("melpa" . 5)
+                                   ("jcs-elpa" . 0)))
 (package-initialize)
 ;; Refresh package descriptions
 (unless package-archive-contents
@@ -123,6 +130,11 @@
          (command (dired-read-shell-command "! on %s: " num-files marked-files)))
     (dired-do-shell-command command num-files local-tmp-files)))
 (define-key dired-mode-map (kbd "\"") 'dired-do-local-command)
+(setq dired-guess-shell-alist-user
+      (list (list "\\.pdf$" "zathura")
+            (list "\\.chm$" "xchm")
+            (list "\\.mkv$" "vlc")
+            (list "\\.mp4$" "vlc")))
 
 (use-package magit
   :ensure t)
@@ -141,7 +153,35 @@
   :ensure t
   :config
   (ivy-mode 1)
-  (counsel-mode 1))
+  (counsel-mode 1)
+  (global-set-key "\C-s" 'swiper)
+  )
+
+(use-package evil
+  :config
+  (evil-mode 1)
+  (setq evil-emacs-state-modes
+        '(xref--xref-buffer-mode
+          vterm-mode
+          Custom-mode
+          bookmark-bmenu-mode
+          Buffer-menu-mode
+          doc-view-mode
+          chatgpt-mode
+          chatgpt-input-mode
+          compilation-mode
+          image-mode
+          ))
+  )
+
+(use-package chatgpt
+  :config
+  (when (file-exists-p "~/.emacs.d/openai-api.el")
+    (load "~/.emacs.d/openai-api.el"))
+  (setq chatgpt-model "gpt-4o"
+        chatgpt-mak-tokens 2000
+        )
+  )
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 ;; (load-theme 'BBEdit-Light t)
