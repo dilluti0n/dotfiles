@@ -132,6 +132,7 @@
 (define-key dired-mode-map (kbd "\"") 'dired-do-local-command)
 (setq dired-guess-shell-alist-user
       (list (list "\\.pdf$" "zathura")
+            (list "\\.djvu$" "zathura")
             (list "\\.chm$" "xchm")
             (list "\\.mkv$" "vlc")
             (list "\\.mp4$" "vlc")))
@@ -157,30 +158,50 @@
   (global-set-key "\C-s" 'swiper)
   )
 
-(use-package evil
+;; (use-package evil
+;;   :config
+;;   (evil-mode 1)
+;;   (setq evil-emacs-state-modes
+;;         '(xref--xref-buffer-mode
+;;           vterm-mode
+;;           Custom-mode
+;;           bookmark-bmenu-mode
+;;           Buffer-menu-mode
+;;           doc-view-mode
+;;           chatgpt-mode
+;;           chatgpt-input-mode
+;;           compilation-mode
+;;           image-mode
+;;           ))
+;;   )
+
+;; (use-package chatgpt
+;;   :config
+;;   (when (file-exists-p "~/.emacs.d/openai-api.el")
+;;     (load "~/.emacs.d/openai-api.el"))
+;;   (setq chatgpt-model "gpt-4o"
+;;         chatgpt-mak-tokens 2000
+;;         )
+;;   )
+
+(use-package avy
+  :ensure t
+  :bind
+  ("C-\"" . avy-goto-char)
+  ("C-'" . avy-goto-char-2)
+  ("C-:" . avy-goto-char-timer)
+  ("M-g f" . avy-goto-line)
+  ("M-g w" . avy-goto-word-1)
   :config
-  (evil-mode 1)
-  (setq evil-emacs-state-modes
-        '(xref--xref-buffer-mode
-          vterm-mode
-          Custom-mode
-          bookmark-bmenu-mode
-          Buffer-menu-mode
-          doc-view-mode
-          chatgpt-mode
-          chatgpt-input-mode
-          compilation-mode
-          image-mode
-          ))
+  (avy-setup-default)
+  (global-set-key (kbd "C-c C-j") 'avy-resume)
   )
 
-(use-package chatgpt
+(use-package projectile
+  :ensure t
   :config
-  (when (file-exists-p "~/.emacs.d/openai-api.el")
-    (load "~/.emacs.d/openai-api.el"))
-  (setq chatgpt-model "gpt-4o"
-        chatgpt-mak-tokens 2000
-        )
+  (projectile-mode +1)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   )
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
@@ -188,3 +209,4 @@
 
 (load "~/.emacs.d/pack/eglot.el")
 ;; (load "~/.emacs.d/pack/lsp-mode.el")
+;; (load "~/.emacs.d/pack/mail.el")
