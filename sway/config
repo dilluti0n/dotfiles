@@ -269,13 +269,15 @@ exec fcitx5 -d
 exec mako
 
 # volume/brightness
-bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5
-bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+exec swayosd-server
+
+bindsym --locked XF86AudioRaiseVolume exec swayosd-client --output-volume +5 raise
+bindsym --locked XF86AudioLowerVolume exec swayosd-client --output-volume -5 lower
+bindsym --locked XF86AudioMute        exec swayosd-client --output-volume mute-toggle
 bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
-bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
-bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym --locked XF86MonBrightnessUp   exec swayosd-client --brightness raise
+bindsym --locked XF86MonBrightnessDown exec swayosd-client --brightness lower
 
 # keymaps
 input "type:keyboard" {
