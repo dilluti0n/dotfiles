@@ -33,6 +33,7 @@ window#waybar {
 }
 
 #pulseaudio { color: #a8c0d8; }
+#mpris { color: #88c0d0; }
 #network { color: #7eb8da; }
 #cpu { color: #e8a0a0; }
 #memory { color: #88b0d0; }

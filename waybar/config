@@ -5,6 +5,7 @@
     "modules-center": ["sway/window"],
     "modules-right": [
         "pulseaudio", 
+        "mpris",
         "network", 
         "cpu", 
         "memory", 
@@ -15,6 +16,19 @@
 
     "sway/workspaces": {
         "format": "{name}"
+    },
+    "mpris": {
+        "format": "MPRIS {player}",
+        "format-paused": "MPRIS {player} (PAUSED)",
+        "player-icons": {
+            "default": ""
+        },
+        "status-icons": {
+            "playing": "PLAY",
+            "paused": "PAUSE",
+            "stopped": "STOP"
+        },
+        "max-length": 15
     },
     "clock": {
         "format": "{:%Y-%m-%d | %H:%M}",
