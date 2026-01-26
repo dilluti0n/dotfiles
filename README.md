@@ -1,4 +1,4 @@
-Personal sway/waybar/kanshi config. Multimonitor supported.
+Personal sway/waybar/kanshi/mako configs. Multimonitor supported.
 
 ![screenshot](./screenshot.png)
 

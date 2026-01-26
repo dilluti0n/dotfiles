@@ -266,6 +266,7 @@ seat seat0 xcursor_theme $cursor_theme $cursor_size
 exec_always pkill waybar; exec waybar
 exec blueman-applet
 exec fcitx5 -d
+exec mako
 
 # volume/brightness
 bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5
