@@ -249,12 +249,17 @@ gaps inner 10
 gaps outer 5
 
 # colors
-
 # class                 border   bg       text     ind        child border
 client.focused          #7eb8da  #2a3a50  #e0e8f0  #a8c0d8    #7eb8da
 client.focused_inactive #3a4a60  #1e2a38  #808890  #3a4a60    #3a4a60
 client.unfocused        #2a3444  #141e30  #606870  #2a3444    #2a3444
 client.urgent           #e8a0a0  #4a2020  #e0e8f0  #e8a0a0    #e8a0a0
+
+set $cursor_size 26
+set $cursor_theme Adwaita
+exec export XCURSOR_SIZE=$cursor_size
+exec export XCURSOR_THEME=$cursor_theme
+seat seat0 xcursor_theme $cursor_theme $cursor_size
 
 # autostarts
 exec_always pkill waybar; exec waybar
