@@ -1,9 +1,7 @@
 #!/bin/bash
 
-pushd ~/.config
-mkdir -p sway kanshi waybar
-popd
+curr="$PWD"
 
-ln -sf ./sway/config ~/.config/sway/config
-ln -sf ./waybar ~/.config/waybar
-ln -sf ./kanshi/config ~/.config/kanshi/config
+ln -sf "$curr/waybar" ~/.config/waybar
+ln -sf "$curr/sway" ~/.config/sway
+ln -sf "$curr/kanshi" ~/.config/kanshi
