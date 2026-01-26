@@ -277,6 +277,21 @@ bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ tog
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
 
+# keymaps
+input "type:keyboard" {
+    xkb_options ctrl:nocaps
+}
+
+input "type:touchpad" {
+    natural_scroll enabled
+    tap enabled
+}
+
+input "type:pointer" {
+    pointer_accel 0.4
+    accel_profile "flat"
+}
+
 # shortcuts
 bindsym $mod+backslash exec firefox-bin
 bindsym $mod+o exec $lock_cmd
