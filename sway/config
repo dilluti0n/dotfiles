@@ -299,7 +299,7 @@ input "type:pointer" {
 
 # shortcuts
 set $browser firefox-bin
-set $favorites $HOME/Favorites
+set $favorites $HOME/.favorite-sites
 
 bindsym $mod+backslash exec $browser
 bindsym $mod+o exec $lock_cmd
