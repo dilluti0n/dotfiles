@@ -4,6 +4,8 @@
 #
 # Read `man 5 sway` for a complete reference.
 
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
 
 ### Variables
 #
@@ -153,7 +155,7 @@ workspace 6 output eDP-1
 workspace 8 output eDP-1
 workspace 10 output eDP-1
 
-exec_always pkill kanshi; exec kanshi
+exec_always sh -c 'pkill kanshi; exec kanshi'
 
 #
 # Layout stuff:
@@ -263,10 +265,11 @@ exec export XCURSOR_THEME=$cursor_theme
 seat seat0 xcursor_theme $cursor_theme $cursor_size
 
 # autostarts
-exec_always pkill waybar; exec waybar
+exec_always sh -c 'pkill waybar; exec waybar'
 exec blueman-applet
 exec fcitx5 -d
 exec mako
+exec --no-startup-id gpgconf --launch gpg-agent
 
 # volume/brightness
 exec swayosd-server
