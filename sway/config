@@ -17,7 +17,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term exec foot -f 'Cascadia Code:size=13'
+set $term exec foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -74,7 +74,7 @@ output * bg $wallpaper_prefix/rei.jpg fit
 
     # Start your launcher
     bindsym $mod+Shift+p exec $menu
-    bindsym $mod+p exec j4-dmenu-desktop --dmenu='bemenu -i'
+    bindsym $mod+p exec j4-dmenu-desktop --dmenu='bemenu -p Applications -i'
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -298,9 +298,16 @@ input "type:pointer" {
 }
 
 # shortcuts
-bindsym $mod+backslash exec firefox-bin
+set $browser firefox-bin
+set $favorites $HOME/Favorites
+
+bindsym $mod+backslash exec $browser
 bindsym $mod+o exec $lock_cmd
 bindsym $mod+Shift+t exec thunar
+bindsym $mod+i exec sh -c 'choice="$(bemenu -p "$1" < "$2")"; \
+  [ -n "$choice" ] && exec "$1" --new-window "$choice"' \
+  sh "$browser" "$favorites"
+bindsym $mod+Shift+i exec sh -c 'bemenu -p "Add to favorites" < /dev/null >> "$1"' sh $favorites
 
 # fonts
 set $gnome-schema org.gnome.desktop.interface
@@ -321,8 +328,5 @@ exec /usr/libexec/xdg-desktop-portal -r
 exec /usr/libexec/xdg-desktop-portal-gtk -r
 
 # Default window behaviors
-for_window [title="NetworkManager"] floating enable, \
-    resize set 800 600
-for_window [app_id="org.pulseaudio.pavucontrol"] floating enable, \
-    resize set 600 400
+for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
 for_window [app_id="nm-connection-editor"] floating enable, move position center
