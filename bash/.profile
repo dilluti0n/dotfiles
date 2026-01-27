@@ -52,12 +52,6 @@ if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
 fi
 
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-    export MOZ_ENABLE_WAYLAND=1
-    export XDG_CURRENT_DESKTOP=sway
-
-    # fcitx
-    export XMODIFIERS="@im=fcitx"
-    export QT_IM_MODULE=fcitx
     # export GTK_IM_MODULE=xim
     # discord --start-minimized &
 

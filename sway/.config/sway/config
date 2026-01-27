@@ -6,6 +6,7 @@
 
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
 exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+exec MOZ_ENABLE_WAYLAND=1
 
 ### Variables
 #
@@ -237,21 +238,27 @@ bindsym $mod+r mode "resize"
 #     }
 # }
 
+#
 # Lock
+#
 set $lock_cmd swaylock \
     --image $wallpaper_prefix/rei_upscale.png \
     --scaling fit
 
 bindswitch --reload --locked lid:on exec $lock_cmd
 
+#
 # ui
+#
 titlebar_padding 2 1
 default_border pixel 2
 default_floating_border pixel 2
 gaps inner 10
 gaps outer 5
 
+#
 # colors
+#
 # class                 border   bg       text     ind        child border
 client.focused          #7eb8da  #2a3a50  #e0e8f0  #a8c0d8    #7eb8da
 client.focused_inactive #3a4a60  #1e2a38  #808890  #3a4a60    #3a4a60
@@ -264,14 +271,22 @@ exec export XCURSOR_SIZE=$cursor_size
 exec export XCURSOR_THEME=$cursor_theme
 seat seat0 xcursor_theme $cursor_theme $cursor_size
 
+#
 # autostarts
+#
 exec_always sh -c 'pkill waybar; exec waybar'
 exec blueman-applet
+
+exec XMODIFIERS="@im=fcitx"
+exec QT_IM_MODULE=fcitx
 exec fcitx5 -d
+
 exec mako
 exec --no-startup-id gpgconf --launch gpg-agent
 
+#
 # volume/brightness
+#
 exec swayosd-server
 
 bindsym --locked XF86AudioRaiseVolume exec swayosd-client --output-volume +5 raise
@@ -282,7 +297,9 @@ bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ tog
 bindsym --locked XF86MonBrightnessUp   exec swayosd-client --brightness raise
 bindsym --locked XF86MonBrightnessDown exec swayosd-client --brightness lower
 
+#
 # keymaps
+#
 input "type:keyboard" {
     xkb_options ctrl:nocaps
 }
@@ -297,7 +314,9 @@ input "type:pointer" {
     accel_profile "flat"
 }
 
+#
 # shortcuts
+#
 set $browser firefox-bin
 set $favorites $HOME/.favorite-sites
 
@@ -309,7 +328,9 @@ bindsym $mod+i exec sh -c 'choice="$(bemenu -p "$1" < "$2")"; \
   sh "$browser" "$favorites"
 bindsym $mod+Shift+i exec sh -c 'bemenu -p "Add to favorites" < /dev/null >> "$1"' sh $favorites
 
+#
 # fonts
+#
 set $gnome-schema org.gnome.desktop.interface
 
 exec_always {
@@ -320,13 +341,17 @@ exec_always {
 
 font pango:monospace 8
 
+#
 # Dark mode
+#
 exec_always {
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 }
 exec /usr/libexec/xdg-desktop-portal -r
 exec /usr/libexec/xdg-desktop-portal-gtk -r
 
+#
 # Default window behaviors
+#
 for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
 for_window [app_id="nm-connection-editor"] floating enable, move position center
