@@ -1,0 +1,15 @@
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+	ui = true
+	pager = true
+[user]
+	email = hskimse1@gmail.com
+	name = dilluti0n
+	signingkey = 3D4686CAC75A49A69E49692099A8DC6DA49AB13C
+[core]
+	editor = vim
+[init]
+	defaultBranch = master
