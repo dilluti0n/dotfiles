@@ -1,20 +1,42 @@
 #!/usr/bin/env bash
 
-cmd="${1:-wl-paste}"
-url=$($cmd)
+url="$(tee)"
 self=vgreb
 
-if [ -z "$url" ]; then
-    notify-send "$self" "Error: no url provided"
+if [ -t 0 ] && [ $# -eq 0 ]; then
+    echo "Usage: echo <url> | $self"
     exit 1
 fi
 
-notify-send "$self" "Download start: $url"
-yt-dlp "$url"
+msg() {
+    notify-send "$self" "$1"
+    echo "$self: $1"
+}
+
+if [ -z "$url" ]; then
+    msg "Error: no url provided" >&2
+    exit 1
+fi
+
+if [[ "$url" =~ [[:space:]] ]]; then
+    msg "Error: Invalid URL (whitespace detected)" >&2
+    exit 1
+fi
+
+safe_url=$(echo -n "$url" | sed 's/[^a-zA-Z0-9]/_/g' | cut -c 1-100)
+
+log_dir="/tmp/${self}_$(whoami)0"
+mkdir -p "$log_dir"
+log_file="$log_dir/$safe_url.log"
+
+msg "Download start: $url"
+yt-dlp --color never --no-progress "$url" > "$log_file" 2>&1
 rc=$?
 
 if [ $rc -eq 0 ]; then
-    notify-send "$self" "Complete: $url"
+    msg "Complete: $url"
 else
-    notify-send "$self" "Fail: $rc"
+    msg "Fail: $url (exit with $rc). See $log_file"
 fi
+
+exit $rc

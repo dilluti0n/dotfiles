@@ -327,8 +327,8 @@ bindsym $mod+i exec sh -c 'choice="$(bemenu -p "$1" < "$2")"; \
   [ -n "$choice" ] && exec "$1" --new-window "$choice"' \
   sh "$browser" "$favorites"
 bindsym $mod+Shift+i exec sh -c 'bemenu -p "Add to favorites" < /dev/null >> "$1"' sh $favorites
-bindsym $mod+y exec vgreb wl-paste
-bindsym $mod+Shift+y exec sh -c 'exec vgreb $(bemenu -p "url" </dev/null)'
+bindsym $mod+y exec wl-paste | vgreb
+bindsym $mod+Shift+y exec bemenu -p "url" </dev/null | vgreb
 
 #
 # fonts
