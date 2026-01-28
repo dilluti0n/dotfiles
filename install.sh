@@ -1,3 +1,3 @@
 #!/bin/bash
 
-stow sway
+stow sway bash
