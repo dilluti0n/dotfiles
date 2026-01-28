@@ -55,5 +55,7 @@ if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
     # export GTK_IM_MODULE=xim
     # discord --start-minimized &
 
-    exec dbus-run-session sway
+    _dm="$HOME/.exec-dm"
+    [ -f "$_dm" ] && . "$_dm"
+    unset _dm
 fi
