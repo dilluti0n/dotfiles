@@ -1,2 +1,2 @@
---js-runtimes node --embed-metadata -o ~/Videos/yt-dlp/%(webpage_url_domain)s/%(title)s.%(ext)s
+--js-runtimes node --embed-metadata -o ~/Videos/yt-dlp/%(webpage_url_domain)s/%(title)s.%(ext)s --extractor-args "youtube:player_client=default,-android_sdkless"
 
