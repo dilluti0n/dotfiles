@@ -1,0 +1,3 @@
+[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+setxkbmap -option 'ctrl:nocaps'
+xset b off
