@@ -46,8 +46,9 @@ histlock() {
 # start download
 start_ts=$(date -Iseconds)
 na="N/A"
-histlock bash -c "printf $format $start_ts $na DOWNLOADING $url $na '$log_file' \
-         $download_id >> $history"
+histlock bash -c 'printf "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" >> "$9"' -- \
+         "$format" "$start_ts" "$na" "DOWNLOADING" "$url" "$na" "$log_file" "$download_id" "$history"
+
 msg "Download start: $url"
 
 tmpfile=$(mktemp)
@@ -55,10 +56,15 @@ export VGREB_TMPFILE="$tmpfile"
 yt-dlp --color never --no-progress \
     --download-archive "$prefix/archive.txt" \
     --rm-cache-dir \
-    --exec 'after_move:echo '{}' > "$VGREB_TMPFILE"' \
+    --exec 'after_move:echo "{}" > "$VGREB_TMPFILE"' \
     "$url" > "$log_file" 2>&1
 rc=$?
-downloaded_file="$(cat $tmpfile 2>/dev/null || echo -n $na)"
+
+if [ -s "$tmpfile" ]; then
+    downloaded_file="$(cat "$tmpfile")"
+else
+    downloaded_file="$na"
+fi
 rm -f -- $tmpfile
 
 end_ts=$(date -Iseconds)
@@ -76,8 +82,8 @@ else
     esac
 fi
 
-new_line=$(printf "$format" "$start_ts" "$end_ts" "$state" "$url" \
-                  "$downloaded_file" "$log_file" "$download_id")
-histlock sed -i "/$download_id/c\\$new_line" "$history"
+new_line="$(printf "$format" "$start_ts" "$end_ts" "$state" "$url" \
+                   "$downloaded_file" "$log_file" "$download_id")"
+histlock sed -i "s|^.*$download_id.*$|$new_line|" "$history"
 
 exit $rc
