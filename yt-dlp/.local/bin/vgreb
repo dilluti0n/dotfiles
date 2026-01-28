@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+cmd="${1:-wl-paste}"
+url=$($cmd)
+self=vgreb
+
+if [ -z "$url" ]; then
+    notify-send "$self" "Error: no url provided"
+    exit 1
+fi
+
+notify-send "$self" "Download start: $url"
+yt-dlp "$url"
+rc=$?
+
+if [ $rc -eq 0 ]; then
+    notify-send "$self" "Complete: $url"
+else
+    notify-send "$self" "Fail: $rc"
+fi

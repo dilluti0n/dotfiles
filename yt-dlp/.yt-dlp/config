@@ -1,2 +1,2 @@
--o ~/Videos/YouTube/%(title)s.%(ext)s
+--embed-metadata --embed-thumbnail --embed-subs -o ~/Videos/%(webpage_url_domain)s/%(title)s.%(ext)s
 
