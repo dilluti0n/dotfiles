@@ -40,7 +40,7 @@ if [ $rc -eq 0 ]; then
     rm -f -- "$log_file"
 else
     echo "Fail: $url (exit with $rc). See $log_file"
-    echo -n "$url" >> "$log_dir/error_urls"
+    echo "$url" $(date -Iseconds) >> "$log_dir/error_urls"
     action=$(notify-send "$self" "Fail: $rc. Click to see log" \
         --action="default=View Log")
 
