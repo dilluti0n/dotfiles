@@ -6,7 +6,6 @@
 
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
 exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
-exec export MOZ_ENABLE_WAYLAND=1
 
 ### Variables
 #
@@ -327,7 +326,7 @@ bindsym $mod+i exec sh -c 'choice="$(bemenu -p "$1" < "$2")"; \
   [ -n "$choice" ] && exec "$1" --new-window "$choice"' \
   sh "$browser" "$favorites"
 bindsym $mod+Shift+i exec sh -c 'bemenu -p "Add to favorites" < /dev/null >> "$1"' sh $favorites
-bindsym $mod+y exec wl-paste | vgreb
+bindsym $mod+y exec wl-paste -p | vgreb
 bindsym $mod+Shift+y exec bemenu -p "url" </dev/null | vgreb
 
 #
@@ -357,3 +356,4 @@ exec /usr/libexec/xdg-desktop-portal-gtk -r
 #
 for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
 for_window [app_id="nm-connection-editor"] floating enable, move position center
+for_window [title="vgreb-log"] floating enable, resize set 800 600, move position center
