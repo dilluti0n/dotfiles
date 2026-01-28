@@ -1,0 +1,17 @@
+[font]
+size = 12
+
+[font.bold]
+family = "CaskaydiaCove NF"
+style = "Bold"
+
+[font.normal]
+family = "CaskaydiaCove NF"
+style = "Regular"
+
+[keyboard]
+bindings = [
+  {  key = "Equals", mods = "Alt", action = "IncreaseFontSize"  },
+  {  key = "Minus", mods = "Alt", action = "DecreaseFontSize"  },
+  {  key = "Key0", mods = "Alt", action = "ResetFontSize"  },
+]
