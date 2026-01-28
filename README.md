@@ -4,5 +4,5 @@ Personal sway/waybar/kanshi/mako configs. Multimonitor supported.
 
 # Usage
 ```bash
-./install.sh
+make sway
 ```
