@@ -4,12 +4,12 @@
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
     "modules-right": [
-        "pulseaudio", 
+        "pulseaudio",
         "mpris",
-        "network", 
-        "cpu", 
-        "memory", 
-        "battery", 
+        "network",
+        "cpu",
+        "memory",
+        "battery",
         "tray",
         "clock"
     ],
@@ -42,8 +42,8 @@
     },
     "battery": {
         "bat": "BAT0",
-        "interval": 10,
-        "format": "BAT {capacity}% {timeTo}",
+        "interval": 5,
+        "format": "BAT {capacity}%",
         "format-charging": "CHARGING {capacity}%",
         "format-plugged": "PLUGGED {capacity}%",
         "format-alt": "BAT {time}"
