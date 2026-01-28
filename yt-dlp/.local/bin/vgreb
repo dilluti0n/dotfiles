@@ -19,7 +19,7 @@ if [ -z "$url" ]; then
 fi
 
 if [[ "$url" =~ [[:space:]] ]]; then
-    msg "Error: Invalid URL (whitespace detected)" >&2
+    msg "Error: $url: Invalid URL (whitespace detected)" >&2
     exit 1
 fi
 
