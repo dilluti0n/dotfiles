@@ -28,49 +28,54 @@ history="$prefix/history"
 download_id=$(uuidgen | tr -d '-')
 log_dir="$prefix/logs"
 log_file="$log_dir/${download_id}.log"
-format='%s\t%s\t%s\t%s\t%s\t%s\t%s\n'
+format='%s\t%s\t%s\t%s\t%s\t%s\n'
+
 mkdir -p "$prefix"
 mkdir -p "$log_dir"
 
 if [ ! -f "$history" ]; then
-    printf "$format" start_ts end_ts state url file log_file \
-           download_id > "$history"
+    printf "$format" download_id start_ts end_ts state url file > "$history"
 fi
 
 history_lock="${history}.lock"
 touch "$history_lock"
+
 histlock() {
     flock "$history_lock" "$@"
 }
 
+ts() {
+    date -Iseconds
+}
+
 # start download
-start_ts=$(date -Iseconds)
+start_ts=$(ts)
 na="N/A"
-histlock bash -c 'printf "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" >> "$9"' -- \
-         "$format" "$start_ts" "$na" "DOWNLOADING" "$url" "$na" "$log_file" "$download_id" "$history"
+histlock bash -c 'printf "$1" "$2" "$3" "$4" "$5" "$6" "$7" >> "$8"' -- \
+         "$format" "$download_id" "$start_ts" "$na" "DOWNLOADING" "$url" "$na" "$history"
 
 msg "Download start: $url"
 
 tmpfile=$(mktemp)
 export VGREB_TMPFILE="$tmpfile"
-yt-dlp --color never --no-progress \
+yt-dlp --color never --progress --newline \
     --download-archive "$prefix/archive.txt" \
     --rm-cache-dir \
     --exec 'after_move:echo "{}" > "$VGREB_TMPFILE"' \
     "$url" > "$log_file" 2>&1
 rc=$?
+end_ts=$(ts)
 
 if [ -s "$tmpfile" ]; then
-    downloaded_file="$(cat "$tmpfile")"
+    dfile="$(cat "$tmpfile")"
 else
-    downloaded_file="$na"
+    dfile="$na"
 fi
 rm -f -- $tmpfile
 
-end_ts=$(date -Iseconds)
 if [ $rc -eq 0 ]; then
-    [ "$downloaded_file" = "$na" ] && state="EXIST" || state="SUCCESS"
-    msg "Complete: ${downloaded_file##*/}"
+    [ "$dfile" = "$na" ] && state="EXIST" || state="SUCCESS"
+    msg "Complete: ${dfile##*/}"
 else
     state="FAIL($rc)"
     echo "Fail: $url (exit with $rc)."
@@ -82,8 +87,8 @@ else
     esac
 fi
 
-new_line="$(printf "$format" "$start_ts" "$end_ts" "$state" "$url" \
-                   "$downloaded_file" "$log_file" "$download_id")"
+new_line="$(printf "$format" "$download_id" "$start_ts" "$end_ts" \
+                   "$state" "$url" "$dfile")"
 histlock sed -i "s|^.*$download_id.*$|$new_line|" "$history"
 
 exit $rc
