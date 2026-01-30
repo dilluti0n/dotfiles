@@ -357,3 +357,4 @@ exec /usr/libexec/xdg-desktop-portal-gtk -r
 for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
 for_window [app_id="nm-connection-editor"] floating enable, move position center
 for_window [title="vgreb-log"] floating enable, resize set 800 600, move position center
+for_window [app_id="mpv"] floating enable, move position center
