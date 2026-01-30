@@ -1,8 +1,3 @@
-export HISTCONTROL="ignoreboth"
-export HISTSIZE="99999"
-export DMENU_FONT="Iosevka Term:size=10"
-export FZF_DEFAULT_COMMAND='fd --type file'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export PATH="$HOME/.local/usr/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 
