@@ -38,9 +38,10 @@ msg() {
 
 cmd_download() {
     url="$1"
+    cmd=download
 
     if [ -t 0 ] && [ $# -eq 0 ]; then
-        msg "Usage: $self download [url]"
+        msg "$cmd: usage: $self download <url>"
         exit 1
     fi
 
@@ -124,7 +125,7 @@ case "$1" in
         echo "  history         Show history."
         echo "  log       [id]  Show log of [id]. If [id] is not given, show recent one."
         echo "  help            Show this help."
-        exit 1
+        exit 0
         ;;
     *)
         [ "$1" = "download" ] && shift
