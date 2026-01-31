@@ -16,6 +16,7 @@ fi
 
 
 # Put your fun stuff here.
+export PAGER="less -FRX"
 export HISTCONTROL="ignoreboth"
 export HISTSIZE="99999"
 export DMENU_FONT="Iosevka Term:size=10"
