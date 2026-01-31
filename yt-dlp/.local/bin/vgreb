@@ -98,7 +98,28 @@ cmd_download() {
 }
 
 cmd_history() {
-    column -t -s $'\t' "$history" | ${PAGER:-less -FRX}
+    [ ! -f "$history" ] && echo "Error: no $history file." && exit 1
+
+    awk -F'\t' '
+    BEGIN { OFS="\t" }
+    NR==1 { print "ID", "START", "END", "STATE", "URL", "FILE"; next }
+
+    {
+        s_date = substr($2, 6, 5)  # 01-31
+        s_time = substr($2, 12, 5) # 20:23
+        start = s_date " " s_time
+
+        if ($3 == "N/A") {
+            end = "   -   "
+        } else {
+            e_date = substr($3, 6, 5)
+            e_time = substr($3, 12, 5)
+
+            end = (s_date == e_date) ? e_time : e_date " " e_time
+        }
+
+        print $1, start, end, $4, $5, $6
+    }' "$history" | column -t -s $'\t' | $PAGER
 }
 
 cmd_log() {
