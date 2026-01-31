@@ -10,7 +10,7 @@ msg() {
 prefix="$HOME/.$self"
 history="$prefix/history"
 log_dir="$prefix/logs"
-download_id=$(uuidgen | tr -d '-')
+download_id=$(uuidgen | tr -d '-' | head -c 8)
 log_file="$log_dir/${download_id}.log"
 format='%s\t%s\t%s\t%s\t%s\t%s\n'
 
@@ -36,7 +36,7 @@ cmd_download() {
     url="$1"
 
     if [ -t 0 ] && [ $# -eq 0 ]; then
-        echo "Usage: echo <url> | $self"
+        msg "Usage: $self download [url]"
         exit 1
     fi
 
@@ -95,4 +95,20 @@ cmd_download() {
     exit $rc
 }
 
-cmd_download "$(tee | xargs)"
+cmd_history() {
+    column -t -s $'\t' "$history" | less -R
+}
+
+case "$1" in
+    history)
+        cmd_history
+        ;;
+    download)
+        shift
+        cmd_download "$@"
+        ;;
+    *)
+        msg "Usage: $self {history|download} [url]"
+        exit 1
+        ;;
+esac
