@@ -122,9 +122,28 @@ cmd_history() {
     }' "$history" | column -t -s $'\t' | $PAGER
 }
 
+get_id() {
+    echo "${1:-$(tail -n 1 "$history" | cut -f 1)}"
+}
+
 cmd_log() {
-    local id="${1:-$(tail -n 1 "$history" | cut -f 1)}"
+    local id="$(get_id $@)"
     ${PAGER:-less -FRX} "$(get_logfile "$id")"
+}
+
+cmd_file() {
+    local id="$(get_id $@)"
+
+    local file_path=$(awk -v search_id="$id" -F'\t' '$1 == search_id {print $6}' "$history" | sed "s/^'//;s/'$//")
+
+    if [[ -n "$file_path" && -f "$file_path" ]]; then
+        echo "Opening: $file_path"
+        xdg-open "$file_path" &
+    elif [[ -n "$file_path" ]]; then
+        echo "Error: path found in history, but file does not exist on disk: $file_path"
+    else
+        echo "Error: No entry found for ID '$id' in $history"
+    fi
 }
 
 case "$1" in
@@ -134,6 +153,10 @@ case "$1" in
     log)
         shift
         cmd_log "$@"
+        ;;
+    file)
+        shift
+        cmd_file "$@"
         ;;
     help)
         echo "Usage: $self [command]"
