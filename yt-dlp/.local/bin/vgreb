@@ -83,10 +83,10 @@ cmd_download() {
 
     if [ $rc -eq 0 ]; then
         [ "$dfile" = "$na" ] && state="EXIST" || state="SUCCESS"
-        msg "Complete: ${dfile##*/}"
+        msg "${state}: $url: $dfile"
     else
         state="FAIL($rc)"
-        msg "Fail: $url (exit with $rc)."
+        msg "${state}: $url (exit with $rc)."
     fi
 
     new_line="$(printf "$format" "$download_id" "$start_ts" "$end_ts" \
