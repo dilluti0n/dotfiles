@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 
 self=vgreb
-
-msg() {
-    notify-send "$self" "$1"
-    echo "$self: $1"
-}
-
 prefix="$HOME/.$self"
 history="$prefix/history"
 log_dir="$prefix/logs"
@@ -30,6 +24,11 @@ histlock() {
 
 ts() {
     date -Iseconds
+}
+
+msg() {
+    notify-send "$self" "$1"
+    echo "$self: $1"
 }
 
 cmd_download() {
