@@ -5,7 +5,12 @@ prefix="$HOME/.$self"
 history="$prefix/history"
 log_dir="$prefix/logs"
 download_id=$(uuidgen | tr -d '-' | head -c 8)
-log_file="$log_dir/${download_id}.log"
+
+get_logfile() {
+    echo "$log_dir/${1}.log"
+}
+
+log_file="$(get_logfile $download_id)"
 format='%s\t%s\t%s\t%s\t%s\t%s\n'
 
 mkdir -p "$prefix"
@@ -95,12 +100,21 @@ cmd_download() {
 }
 
 cmd_history() {
-    column -t -s $'\t' "$history" | less -R
+    column -t -s $'\t' "$history" | ${PAGER:-cat}
+}
+
+cmd_log() {
+    local id="${1:-$(tail -n 1 "$history" | cut -f 1)}"
+    ${PAGER:-cat} "$(get_logfile "$id")"
 }
 
 case "$1" in
     history)
         cmd_history
+        ;;
+    log)
+        shift
+        cmd_log "$@"
         ;;
     *)
         [ "$1" = "download" ] && shift
