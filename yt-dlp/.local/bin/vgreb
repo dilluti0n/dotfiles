@@ -10,6 +10,7 @@ msg() {
 prefix="$HOME/.$self"
 history="$prefix/history"
 log_dir="$prefix/logs"
+download_id=$(uuidgen | tr -d '-')
 log_file="$log_dir/${download_id}.log"
 format='%s\t%s\t%s\t%s\t%s\t%s\n'
 
@@ -49,7 +50,6 @@ cmd_download() {
         exit 1
     fi
 
-    download_id=$(uuidgen | tr -d '-')
     start_ts=$(ts)
     na="N/A"
     histlock bash -c 'printf "$1" "$2" "$3" "$4" "$5" "$6" "$7" >> "$8"' -- \
