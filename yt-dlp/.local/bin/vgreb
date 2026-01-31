@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -o pipefail
+
 self=vgreb
 prefix="$HOME/.$self"
 history="$prefix/history"
