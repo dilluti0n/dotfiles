@@ -95,12 +95,12 @@ cmd_download() {
 }
 
 cmd_history() {
-    column -t -s $'\t' "$history" | ${PAGER:-cat}
+    column -t -s $'\t' "$history" | ${PAGER:-less -FRX}
 }
 
 cmd_log() {
     local id="${1:-$(tail -n 1 "$history" | cut -f 1)}"
-    ${PAGER:-cat} "$(get_logfile "$id")"
+    ${PAGER:-less -FRX} "$(get_logfile "$id")"
 }
 
 case "$1" in
