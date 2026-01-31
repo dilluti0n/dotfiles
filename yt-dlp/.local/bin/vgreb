@@ -103,12 +103,8 @@ case "$1" in
     history)
         cmd_history
         ;;
-    download)
-        shift
-        cmd_download "$@"
-        ;;
     *)
-        msg "Usage: $self {history|download} [url]"
-        exit 1
+        [ "$1" = "download" ] && shift
+        cmd_download "$@"
         ;;
 esac
