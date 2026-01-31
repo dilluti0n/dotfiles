@@ -16,7 +16,6 @@ fi
 
 
 # Put your fun stuff here.
-export PAGER="less -FRX"
 export HISTCONTROL="ignoreboth"
 export HISTSIZE="99999"
 export DMENU_FONT="Iosevka Term:size=10"
@@ -158,7 +157,7 @@ luks-tpm-update() {
         sudo systemd-cryptenroll "$LUKS_BLK_DEV" \
           --tpm2-device=auto \
           --tpm2-pcrs=4+9+12 \
-          --tpm2-with-pin=yes
+          --tpm2-with-pin=no
 }
 
 # ssh-agent
