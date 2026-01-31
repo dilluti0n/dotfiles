@@ -91,7 +91,8 @@ cmd_download() {
 
     new_line="$(printf "$format" "$download_id" "$start_ts" "$end_ts" \
                        "$state" "$url" "$dfile")"
-    histlock sed -i "s|^.*$download_id.*$|$new_line|" "$history"
+    histlock bash -c 'awk -v id="$1" -v new="$2" "(\$1 == id) { print new; next } { print }" "$3" > "$3.tmp" && mv "$3.tmp" "$3"' -- \
+         "$download_id" "$new_line" "$history"
 
     exit $rc
 }
