@@ -116,6 +116,16 @@ case "$1" in
         shift
         cmd_log "$@"
         ;;
+    help)
+        echo "Usage: $self [command]"
+        echo ""
+        echo "Commands:"
+        echo "  download* <url> Download <url> via yt-dlp"
+        echo "  history         Show history."
+        echo "  log       [id]  Show log of [id]. If [id] is not given, show recent one."
+        echo "  help            Show this help."
+        exit 1
+        ;;
     *)
         [ "$1" = "download" ] && shift
         cmd_download "$@"
