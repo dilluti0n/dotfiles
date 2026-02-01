@@ -16,7 +16,7 @@ fi
 
 
 # Put your fun stuff here.
-eval $(keychain --eval --agents ssh)
+[ -f ~/.keychain/${HOSTNAME}-sh ] && . ~/.keychain/${HOSTNAME}-sh
 
 export HISTCONTROL="ignoreboth"
 export HISTSIZE="99999"
