@@ -4,12 +4,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export NPM_CONFIG_PREFIX=$HOME/.local/
 export PATH="$NPM_CONFIG_PREFIX/bin:$PATH"
 
-if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-    . "$HOME/.bashrc"
-    fi
-fi
+export DMENU_FONT="Iosevka Term:size=10"
 
 # # TEMP for chromium (ozone-platform=wayland is unstable)
 # XDG_SESSION_TYPE="x11"
@@ -53,4 +48,12 @@ if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
     _dm="$HOME/.exec-dm"
     [ -f "$_dm" ] && . "$_dm"
     unset _dm
+fi
+
+# source .bashrc if it is not gui shell
+if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
+    fi
 fi
