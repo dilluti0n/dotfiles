@@ -16,12 +16,12 @@ fi
 
 
 # Put your fun stuff here.
+eval $(keychain --eval --agents ssh)
+
 export HISTCONTROL="ignoreboth"
 export HISTSIZE="99999"
 export FZF_DEFAULT_COMMAND='fd --type file'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-export GPG_TTY="$(tty)"
 
 export PS1='[\u@\h \[\e[32m\]\W\[\e[m\]]\$ '
 export EDITOR='/bin/vi'
@@ -156,19 +156,3 @@ luks-tpm-update() {
           --tpm2-pcrs=4+9+12 \
           --tpm2-with-pin=no
 }
-
-# ssh-agent
-_ssh() {
-    eval $(keychain --eval --agents ssh 2>/dev/null)
-
-    # Check if there is loaded key
-    ssh-add -l &>/dev/null
-
-    if [ $? -ne 0 ]; then
-        pass show ssh/eps | ssh-add -
-        pass show ssh/guru | ssh-add -
-    fi
-}
-
-_ssh
-unset -f _ssh
