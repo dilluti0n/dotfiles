@@ -273,9 +273,7 @@ seat seat0 xcursor_theme $cursor_theme $cursor_size
 #
 # autostarts
 #
-exec waybar
-# rerun waybar
-exec_always pkill -SIGUSR2 waybar
+exec_always sh -c 'pkill waybar; exec waybar'
 exec blueman-applet
 
 exec XMODIFIERS="@im=fcitx"
