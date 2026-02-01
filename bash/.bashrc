@@ -24,8 +24,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export GPG_TTY="$(tty)"
 
-. "$HOME/Codes/project/pipellm/ALIASES.sh"
-
 export PS1='[\u@\h \[\e[32m\]\W\[\e[m\]]\$ '
 export EDITOR='/bin/vi'
 
