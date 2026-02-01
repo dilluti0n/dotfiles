@@ -14,6 +14,7 @@ _ssh() {
 
     pass show ssh/eps | ssh-add -
     pass show ssh/guru | ssh-add -
+    clear
 }
 
 _ssh
