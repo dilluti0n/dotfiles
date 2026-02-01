@@ -14,6 +14,9 @@ $(SIMPLE_DEPS):
 sway: $(SWAY_DEPS)
 	$(STOW) $@
 
+.PHONY: wayland
+wayland: sway emacs vim git
+
 .PHONY: unstow
 unstow:
 	$(STOW) -D $(PKGS)

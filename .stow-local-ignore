@@ -5,3 +5,4 @@ README.md
 screenshot.png
 install.sh
 \.stow-local-ignore
+\Makefile
