@@ -1,11 +1,10 @@
 {
     "layer": "top",
     "position": "top",
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", "sway/mode", "mpris"],
     "modules-center": ["sway/window"],
     "modules-right": [
         "pulseaudio",
-        "mpris",
         "network",
         "cpu",
         "memory",
@@ -28,7 +27,7 @@
             "paused": "PAUSE",
             "stopped": "STOP"
         },
-        "max-length": 15
+        "max-length": 25
     },
     "clock": {
         "format": "{:%Y-%m-%d | %H:%M}",
