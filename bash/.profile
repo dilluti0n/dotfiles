@@ -12,8 +12,10 @@ export GPG_TTY="$(tty)"
 _ssh() {
     eval $(keychain --eval --agents ssh)
 
-    pass show ssh/eps | ssh-add -
-    pass show ssh/guru | ssh-add -
+    if ! ssh-add -l >/dev/null 2>&1; then
+        pass show ssh/eps | ssh-add -
+        pass show ssh/guru | ssh-add -
+    fi
     clear
 }
 
