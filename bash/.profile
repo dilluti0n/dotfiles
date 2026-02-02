@@ -60,8 +60,6 @@ fi
 if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
     # export GTK_IM_MODULE=xim
     # discord --start-minimized &
-    export LIBVA_DRIVER_NAME=radeonsi
-    export VDPAU_DRIVER=radeonsi
 
     _dm="$HOME/.exec-dm"
     [ -f "$_dm" ] && . "$_dm"
