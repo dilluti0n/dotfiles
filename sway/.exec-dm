@@ -6,5 +6,6 @@ export CLUTTER_BACKEND=wayland
 
 export XDG_CURRENT_DESKTOP=sway
 export XDG_SESSION_DESKTOP=sway
+export GTK_THEME='Adwaita:dark'
 
 exec dbus-run-session sway
