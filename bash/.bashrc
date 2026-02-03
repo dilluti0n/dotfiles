@@ -30,8 +30,19 @@ alias mv='mv -i'
 alias cp='cp -i'
 alias lvi='NVIM_APPNAME=lazyvim nvim'
 alias nvc='NVIM_APPNAME=nvchad nvim'
-alias fcd='cd $(fd --type=directory --exclude='.git' -H |fzf)'
 alias eclean-kernel='eclean-kernel -A'
+
+fcd() {
+    local fd='fd --type=directory --exclude='.git' -H'
+
+    if [[ -n "$1" ]]; then
+      local dir
+      dir=$($fd | fzf --filter="$1" | head -1)
+      [[ -n "$dir" ]] && cd "$dir" || echo "no match: $1"
+    else
+      cd "$($fd | fzf)"
+    fi
+}
 
 cpapi() {
     local prefix="${1^^}"
