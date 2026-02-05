@@ -1,0 +1,3 @@
+#!/bin/sh
+
+bemenu -x indicator -p "Password: " </dev/null
