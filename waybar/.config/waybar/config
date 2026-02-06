@@ -51,7 +51,7 @@
         "format-wifi": "WIFI {essid}",
         "format-ethernet": "ETH {ifname}",
         "format-disconnected": "DISCONNECTED",
-        "on-click": "nm-connection-editor"
+        "on-click": "iwgtk"
     },
     "pulseaudio": {
         "format": "VOL {volume}%",
