@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=imv list
+Exec=imv . -n %f
+Icon=multimedia-photo-viewer
+Terminal=false
+MimeType=image/jpeg;image/png;image/gif;image/svg+xml;image/webp;

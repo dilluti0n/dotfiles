@@ -26,12 +26,13 @@ window#waybar {
     border-bottom: 1px solid #7eb8da;
 }
 
-#mpris, #clock, #cpu, #memory, #battery, #network, #pulseaudio, #mode {
+#custom-bzmenu, #mpris, #clock, #cpu, #memory, #battery, #network, #pulseaudio, #mode {
     padding: 2px 6px;
     margin: 0 1px;
     min-height: 0;
 }
 
+#custom-bzmenu { color: #8fbcbb; }
 #pulseaudio { color: #a8c0d8; }
 #mpris { color: #88c0d0; }
 #network { color: #7eb8da; }

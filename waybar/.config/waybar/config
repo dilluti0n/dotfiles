@@ -5,6 +5,7 @@
     "modules-center": ["sway/window"],
     "modules-right": [
         "pulseaudio",
+        "custom/bzmenu",
         "network",
         "cpu",
         "memory",
@@ -51,15 +52,20 @@
         "format-wifi": "WIFI {essid}",
         "format-ethernet": "ETH {ifname}",
         "format-disconnected": "DISCONNECTED",
-        "on-click": "kill `pgrep -x iwgtk` || iwgtk"
+        "on-click": "killall -q iwgtk || iwgtk"
     },
     "pulseaudio": {
         "format": "VOL {volume}%",
         "format-muted": "MUTED",
-        "on-click": "kill `pgrep -x pavucontrol` || pavucontrol"
+        "on-click": "killall -q pavucontrol || pavucontrol"
     },
     "tray": {
         "icon-size": 15,
         "sapcing": 10
+    },
+    "custom/bzmenu": {
+        "format": "BZMENU",
+        "on-click": "bzmenu -l bemenu",
+        "tooltip": false
     }
 }
