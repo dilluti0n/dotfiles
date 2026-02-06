@@ -51,12 +51,12 @@
         "format-wifi": "WIFI {essid}",
         "format-ethernet": "ETH {ifname}",
         "format-disconnected": "DISCONNECTED",
-        "on-click": "iwgtk"
+        "on-click": "kill `pgrep -x iwgtk` || iwgtk"
     },
     "pulseaudio": {
         "format": "VOL {volume}%",
         "format-muted": "MUTED",
-        "on-click": "pavucontrol"
+        "on-click": "kill `pgrep -x pavucontrol` || pavucontrol"
     },
     "tray": {
         "icon-size": 15,
