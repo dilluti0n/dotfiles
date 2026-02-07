@@ -1,5 +1,5 @@
 STOW := stow
-SWAY_DEPS := waybar kanshi mako foot bash yt-dlp
+SWAY_DEPS := waybar kanshi mako foot bash yt-dlp xdg
 SIMPLE_DEPS := $(SWAY_DEPS) emacs vim git dwm alacritty
 PKGS := $(SIMPLE_DEPS) sway
 
