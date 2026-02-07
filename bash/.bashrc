@@ -169,5 +169,12 @@ luks-tpm-update() {
 }
 
 fzargs() {
-    fd -t f -0 | fzf -m --read0 --print0 | xargs -0 -o "$@"
+    local type=f
+
+    if [[ $1=="-d" ]]; then
+        type=d
+        shift
+    fi
+
+    fd -t "$type" -0 | fzf -m --read0 --print0 | xargs -0 -r -o "$@"
 }
