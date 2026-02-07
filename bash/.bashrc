@@ -169,5 +169,5 @@ luks-tpm-update() {
 }
 
 fzargs() {
-    fd -t f -0 | fzf --read0 --print0 | xargs -0 "$@"
+    fd -t f -0 | fzf --read0 --print0 | xargs -0 -o "$@"
 }
