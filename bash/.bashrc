@@ -170,11 +170,16 @@ luks-tpm-update() {
 
 fzargs() {
     local type=f
+    local hidden=
 
-    if [[ $1=="-d" ]]; then
-        type=d
-        shift
-    fi
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -d) type=d; shift ;;
+            -a) hidden="-H"; shift ;;
+            --) shift; break ;;
+            *)  break ;;
+        esac
+    done
 
-    fd -t "$type" -0 | fzf -m --read0 --print0 | xargs -0 -r -o "$@"
+    fd -t $type $hidden -0 | fzf -m --read0 --print0 | xargs -0 -r -o "$@"
 }
