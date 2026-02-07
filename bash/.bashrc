@@ -167,3 +167,7 @@ luks-tpm-update() {
           --tpm2-pcrs=4+9+12 \
           --tpm2-with-pin=no
 }
+
+fzargs() {
+    fd -t f -0 | fzf --read0 --print0 | xargs -0 "$@"
+}
