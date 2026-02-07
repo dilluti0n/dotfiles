@@ -4,7 +4,7 @@ SIMPLE_DEPS := $(SWAY_DEPS) emacs vim git dwm alacritty
 PKGS := $(SIMPLE_DEPS) sway
 
 .PHONY: all
-all: sway
+all: $(PKGS)
 
 .PHONY: $(SIMPLE_DEPS) 
 $(SIMPLE_DEPS):
