@@ -26,17 +26,18 @@ window#waybar {
     border-bottom: 1px solid #7eb8da;
 }
 
-#custom-bzmenu, #mpris, #clock, #cpu, #memory, #battery, #network, #pulseaudio, #mode {
+#temperature, #custom-bzmenu, #mpris, #clock, #cpu, #memory, #battery, #network, #pulseaudio, #mode {
     padding: 2px 6px;
     margin: 0 1px;
     min-height: 0;
 }
 
-#custom-bzmenu { color: #8fbcbb; }
 #pulseaudio { color: #a8c0d8; }
+#custom-bzmenu { color: #8fbcbb; }
 #mpris { color: #88c0d0; }
 #network { color: #7eb8da; }
 #cpu { color: #e8a0a0; }
 #memory { color: #88b0d0; }
-#battery { color: #d0dce8; }
+#temperature { color: #b4e1f0; }
+#battery { color: #b8d0f0; }
 #clock { color: #c0d8f0; }

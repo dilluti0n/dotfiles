@@ -9,6 +9,7 @@
         "network",
         "cpu",
         "memory",
+        "temperature",
         "battery",
         "tray",
         "clock"
@@ -39,6 +40,10 @@
     },
     "memory": {
         "format": "MEM {percentage}%"
+    },
+    "temparature": {
+        "format": "{temperatureC}",
+        "interval": 10
     },
     "battery": {
         "bat": "BAT0",
