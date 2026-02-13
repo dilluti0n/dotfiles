@@ -328,6 +328,7 @@ bindsym $mod+i exec sh -c 'choice="$(bemenu -p "$1" < "$2")"; \
 bindsym $mod+Shift+i exec sh -c 'bemenu -p "Add to favorites" < /dev/null >> "$1"' sh $favorites
 bindsym $mod+y exec vgreb download "$(wl-paste -p)"
 bindsym $mod+Shift+y exec vgreb download "$(bemenu -p 'url' </dev/null)"
+bindsym Print exec grim -g "$(slurp)" - | wl-copy
 
 #
 # fonts
