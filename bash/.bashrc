@@ -183,3 +183,13 @@ fzargs() {
 
     fd -t $type $hidden -0 | fzf -m --read0 --print0 | xargs -0 -r -o "$@"
 }
+
+# ssh-agent
+ssh-enroll() {
+    eval $(keychain --eval --agents ssh)
+
+    if ! ssh-add -l >/dev/null 2>&1; then
+        pass show ssh/eps | ssh-add -
+        pass show ssh/guru | ssh-add -
+    fi
+}

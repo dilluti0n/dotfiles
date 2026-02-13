@@ -7,20 +7,8 @@ export PATH="$NPM_CONFIG_PREFIX/bin:$PATH"
 export DMENU_FONT="Iosevka Term:size=10"
 
 export GPG_TTY="$(tty)"
+eval $(keychain --eval --agents ssh)
 
-# ssh-agent
-_ssh() {
-    eval $(keychain --eval --agents ssh)
-
-    if ! ssh-add -l >/dev/null 2>&1; then
-        pass show ssh/eps | ssh-add -
-        pass show ssh/guru | ssh-add -
-    fi
-    clear
-}
-
-_ssh
-unset -f _ssh
 
 # # TEMP for chromium (ozone-platform=wayland is unstable)
 # XDG_SESSION_TYPE="x11"
