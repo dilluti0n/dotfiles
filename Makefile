@@ -1,6 +1,6 @@
 STOW := stow
 SWAY_DEPS := waybar kanshi mako foot bash yt-dlp xdg
-SIMPLE_DEPS := $(SWAY_DEPS) emacs vim git dwm alacritty
+SIMPLE_DEPS := $(SWAY_DEPS) emacs vim git dwm alacritty mutt
 PKGS := $(SIMPLE_DEPS) sway
 
 .PHONY: all
