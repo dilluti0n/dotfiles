@@ -4,8 +4,10 @@
 #
 # Read `man 5 sway` for a complete reference.
 
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
-exec systemctl --user import-environment WAYLAND_DISPLAY DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
+exec dbus-update-activation-environment WAYLAND_DISPLAY DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
+exec loginctl set-environment WAYLAND_DISPLAY=$WAYLAND_DISPLAY DISPLAY=$DISPLAY SWAYSOCK=$SWAYSOCK XDG_CURRENT_DESKTOP=$XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP=$XDG_SESSION_DESKTOP
+
+exec gentoo-pipewire-launcher restart &
 
 ### Variables
 #
