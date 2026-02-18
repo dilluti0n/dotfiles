@@ -164,7 +164,8 @@ getlink() {
 }
 
 luks-tpm-update() {
-    LUKS_BLK_DEV=/dev/nvme0n1p2
+    local LUKS_BLK_DEV=/dev/nvme0n1p2
+
     sudo systemd-cryptenroll "$LUKS_BLK_DEV" --wipe-slot=tpm2 &&
         sudo systemd-cryptenroll "$LUKS_BLK_DEV" \
           --tpm2-device=auto \
@@ -173,8 +174,10 @@ luks-tpm-update() {
 }
 
 luks-tpm-update() {
-    LUKS_BLK_DEV=/dev/nvme0n1p2
-    local SLOT=$(sudo clevis luks list -d "$LUKS_BLK_DEV" 2>/dev/null | grep tpm2 | awk -F: '{print $1}' | tr -d ' ')
+    local LUKS_BLK_DEV=/dev/nvme0n1p2
+    local SLOT=$(sudo clevis luks list -d "$LUKS_BLK_DEV" 2>/dev/null \
+                     | grep tpm2 | awk -F: '{print $1}' | tr -d ' ')
+
     [[ -n "$SLOT" ]] && sudo clevis luks unbind -d "$LUKS_BLK_DEV" -s "$SLOT" -f
     sudo clevis luks bind -d "$LUKS_BLK_DEV" tpm2 \
         '{"pcr_bank":"sha256","pcr_ids":"4,9,12"}'
