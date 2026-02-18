@@ -172,6 +172,14 @@ luks-tpm-update() {
           --tpm2-with-pin=no
 }
 
+luks-tpm-update() {
+    LUKS_BLK_DEV=/dev/nvme0n1p2
+    local SLOT=$(sudo clevis luks list -d "$LUKS_BLK_DEV" 2>/dev/null | grep tpm2 | awk -F: '{print $1}' | tr -d ' ')
+    [[ -n "$SLOT" ]] && sudo clevis luks unbind -d "$LUKS_BLK_DEV" -s "$SLOT" -f
+    sudo clevis luks bind -d "$LUKS_BLK_DEV" tpm2 \
+        '{"pcr_bank":"sha256","pcr_ids":"4,9,12"}'
+}
+
 fzargs() {
     local type=f
     local hidden=
