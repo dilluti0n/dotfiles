@@ -10,10 +10,4 @@ export XDG_SESSION_DESKTOP=niri
 export GTK_THEME='Adwaita:dark'
 export XCURSOR_THEME="Adwaita"
 
-swayidle -w \
-  timeout 300 'swaylock -f' \
-  timeout 600 'niri msg action power-off-monitors' \
-  resume 'niri msg action power-on-monitors' \
-  before-sleep 'swaylock -f'
-
 exec dbus-run-session niri --session

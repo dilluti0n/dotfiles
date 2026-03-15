@@ -1,4 +1,7 @@
 spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE"
+spawn-sh-at-startup "/usr/libexec/xdg-desktop-portal-wlr"
+spawn-sh-at-startup "/usr/libexec/xdg-desktop-portal-gtk"
+spawn-sh-at-startup "/usr/libexec/xdg-desktop-portal -r"
 spawn-sh-at-startup "swaybg -m fit -i $HOME/Images/wallpapers/rei.jpg -c '#000000'"
 spawn-sh-at-startup "fcitx5 -d"
 spawn-sh-at-startup "waybar"
@@ -10,16 +13,18 @@ spawn-sh-at-startup "gsettings set org.gnome.desktop.interface document-font-nam
 spawn-sh-at-startup "gsettings set org.gnome.desktop.interface monospace-font-name 'Cascadia Code 10'"
 spawn-sh-at-startup "gsettings set org.gnome.desktop.interface cursor-theme Adwaita"
 spawn-sh-at-startup "gentoo-pipewire-launcher"
-
-spawn-at-startup "/usr/libexec/xdg-desktop-portal-wlr"
-spawn-at-startup "/usr/libexec/xdg-desktop-portal-gtk"
-spawn-at-startup "/usr/libexec/xdg-desktop-portal" "-r"
+spawn-at-startup "swayidle" "-w" \
+   "timeout" "300" "swaylock -f" \
+   "timeout" "600" "niri msg action power-off-monitors" \
+   "resume" "niri msg action power-on-monitors" \
+   "before-sleep" "swaylock -f" \
 
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+Return { spawn "foot"; }
     Mod+p { spawn "j4-dmenu-desktop" "-d" "bemenu -p Applications -i"; }
     Mod+Shift+p { spawn "bemenu-run"; }
+    Mod+e { spawn "thunar"; }
     Mod+Backslash { spawn "firefox-bin"; }
     Mod+i {
         spawn "sh" "-c" r#"
