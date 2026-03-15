@@ -253,8 +253,8 @@ bindswitch --reload --locked lid:on exec $lock_cmd
 #
 titlebar_padding 2 1
 default_border pixel 2
-default_floating_border pixel 2
-gaps inner 10
+default_floating_border normal 2
+gaps inner 5
 gaps outer 5
 
 #
