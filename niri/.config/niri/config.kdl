@@ -9,6 +9,7 @@ spawn-sh-at-startup "gsettings set org.gnome.desktop.interface document-font-nam
 spawn-sh-at-startup "gsettings set org.gnome.desktop.interface monospace-font-name 'Cascadia Code 10'"
 spawn-sh-at-startup "gsettings set org.gnome.desktop.interface cursor-theme Adwaita"
 spawn-sh-at-startup "gentoo-pipewire-launcher"
+spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE"
 
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
@@ -28,7 +29,7 @@ binds {
     Mod+Shift+j { move-window-down; }
     Mod+Shift+k { move-window-up; }
     Mod+Shift+l { move-column-right; }
-    
+
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
     Mod+Up    { focus-window-up; }
