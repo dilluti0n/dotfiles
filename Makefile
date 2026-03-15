@@ -1,5 +1,5 @@
 STOW := stow
-GUI_DEPS := mako foot bash yt-dlp xdg waybar emacs vim git
+GUI_DEPS := mako foot bash yt-dlp xdg waybar emacs vim git swaylock
 SWAY_DEPS := kanshi $(GUI_DEPS)
 NIRI_DEPS := $(GUI_DEPS)
 PKGS := $(GUI_DEPS) sway niri kanshi
