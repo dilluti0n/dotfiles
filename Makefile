@@ -1,21 +1,19 @@
 STOW := stow
-SWAY_DEPS := waybar kanshi mako foot bash yt-dlp xdg
-SIMPLE_DEPS := $(SWAY_DEPS) emacs vim git dwm alacritty mutt
-PKGS := $(SIMPLE_DEPS) sway
+GUI_DEPS := mako foot bash yt-dlp xdg waybar emacs vim git
+SWAY_DEPS := kanshi $(GUI_DEPS)
+NIRI_DEPS := $(GUI_DEPS)
+PKGS := $(GUI_DEPS) sway niri kanshi
 
 .PHONY: all
-all: $(PKGS)
+all: niri
 
-.PHONY: $(SIMPLE_DEPS) 
-$(SIMPLE_DEPS):
+.PHONY: $(PKGS)
+$(PKGS):
 	$(STOW) $@
 
-.PHONY: sway
 sway: $(SWAY_DEPS)
-	$(STOW) $@
 
-.PHONY: wayland
-wayland: sway emacs vim git
+niri: $(NIRI_DEPS)
 
 .PHONY: unstow
 unstow:

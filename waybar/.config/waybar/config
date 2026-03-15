@@ -1,12 +1,13 @@
 {
     "layer": "top",
     "position": "top",
-    "modules-left": ["sway/workspaces", "sway/mode", "mpris"],
-    "modules-center": ["sway/window"],
+    "modules-left": ["niri/workspaces", "mpris"],
+    "modules-center": ["niri/window"], 
     "modules-right": [
         "pulseaudio",
         "custom/bzmenu",
-        "network",
+        "network#wlan",
+        "network#eth",
         "cpu",
         "memory",
         "temperature",
@@ -53,11 +54,16 @@
         "format-plugged": "PLUGGED {capacity}%",
         "format-alt": "BAT {time}"
     },
-    "network": {
+    "network#wlan": {
+        "interface": "wlan0",
         "format-wifi": "WIFI {essid}",
-        "format-ethernet": "ETH {ifname}",
-        "format-disconnected": "DISCONNECTED",
+        "format-disconnected": "WIFI N/A",
         "on-click": "killall -q iwgtk || iwgtk"
+    },
+    "network#eth": {
+        "interface": "enp1s0f0",
+        "format-ethernet": "ETH {ifname}",
+        "format-disconnected": ""
     },
     "pulseaudio": {
         "format": "VOL {volume}%",
