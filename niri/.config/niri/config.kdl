@@ -95,6 +95,7 @@ binds {
     XF86MonBrightnessUp { spawn "swayosd-client" "--brightness" "raise"; }
 
     Mod+o { spawn "swaylock"; }
+    Mod+Shift+o { spawn "sh" "-c" "swaylock & sleep 1 && niri msg action power-off-monitors"; }
 }
 
 input {
