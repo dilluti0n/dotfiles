@@ -13,7 +13,8 @@ spawn-sh-at-startup "gentoo-pipewire-launcher"
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+Return { spawn "foot"; }
-    Mod+p { spawn "bemenu-run"; }
+    Mod+p { spawn "j4-dmenu-desktop" "-d" "bemenu -p Applications"; }
+    Mod+Shift+p { spawn "bemenu-run"; }
     Mod+Backslash { spawn "firefox-bin"; }
 
     Mod+Shift+q { close-window; }
