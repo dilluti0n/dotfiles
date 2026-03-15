@@ -1,3 +1,4 @@
+spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE"
 spawn-sh-at-startup "swaybg -m fit -i $HOME/Images/wallpapers/rei.jpg -c '#000000'"
 spawn-sh-at-startup "fcitx5 -d"
 spawn-sh-at-startup "waybar"
@@ -9,7 +10,10 @@ spawn-sh-at-startup "gsettings set org.gnome.desktop.interface document-font-nam
 spawn-sh-at-startup "gsettings set org.gnome.desktop.interface monospace-font-name 'Cascadia Code 10'"
 spawn-sh-at-startup "gsettings set org.gnome.desktop.interface cursor-theme Adwaita"
 spawn-sh-at-startup "gentoo-pipewire-launcher"
-spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE"
+
+spawn-at-startup "/usr/libexec/xdg-desktop-portal-wlr"
+spawn-at-startup "/usr/libexec/xdg-desktop-portal-gtk"
+spawn-at-startup "/usr/libexec/xdg-desktop-portal" "-r"
 
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
