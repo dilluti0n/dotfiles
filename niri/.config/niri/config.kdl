@@ -21,7 +21,19 @@ binds {
     Mod+p { spawn "j4-dmenu-desktop" "-d" "bemenu -p Applications -i"; }
     Mod+Shift+p { spawn "bemenu-run"; }
     Mod+Backslash { spawn "firefox-bin"; }
+    Mod+i {
+        spawn "sh" "-c" r#"
+            choice="$(bemenu -p "$1" < "$2")";
+            [ -n "$choice" ] && exec "$1" --new-window "$choice"
+        "# "sh" "firefox-bin" "/home/hskim/.favorite-sites"
+    }
+    Mod+Shift+i {
+        spawn "sh" "-c" r#"
+            bemenu -p 'Add to favorites' < /dev/null >> "$1"
+        "# "sh" "/home/hskim/.favorite-sites"
+    }
 
+    Mod+Shift+c { quit skip-confirmation=false; }
     Mod+Shift+q { close-window; }
 
     Mod+h { focus-column-left; }
