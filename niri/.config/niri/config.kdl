@@ -14,7 +14,7 @@ spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLA
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+Return { spawn "foot"; }
-    Mod+p { spawn "j4-dmenu-desktop" "-d" "bemenu -p Applications"; }
+    Mod+p { spawn "j4-dmenu-desktop" "-d" "bemenu -p Applications -i"; }
     Mod+Shift+p { spawn "bemenu-run"; }
     Mod+Backslash { spawn "firefox-bin"; }
 
