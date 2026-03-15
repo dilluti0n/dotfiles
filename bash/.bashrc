@@ -34,7 +34,6 @@ alias eclean-kernel='eclean-kernel -A'
 
 # ccache
 export PATH="/usr/lib/ccache/bin${PATH:+:}${PATH}"
-export CCACHE_DIR="/var/cache/ccache"
 
 fcd() {
     local fd='fd --type=directory --exclude='.git' -H'
