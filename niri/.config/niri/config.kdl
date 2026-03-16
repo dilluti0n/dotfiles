@@ -176,3 +176,8 @@ layout {
 cursor {
     xcursor-theme "Adwaita"
 }
+
+window-rule {
+    match app-id="firefox"
+    open-maximized true
+}
