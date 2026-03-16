@@ -26,13 +26,13 @@ binds {
     Mod+Shift+p { spawn "bemenu-run"; }
     Mod+e { spawn "thunar"; }
     Mod+Backslash { spawn "firefox-bin"; }
-    Mod+i {
+    Mod+i hotkey-overlay-title="Spawn favorites" {
         spawn "sh" "-c" r#"
             choice="$(bemenu -p "$1" < "$2")";
             [ -n "$choice" ] && exec "$1" --new-window "$choice"
         "# "sh" "firefox-bin" "/home/hskim/.favorite-sites"
     }
-    Mod+Shift+i {
+    Mod+Shift+i hotkey-overlay-title="Add to favorites" {
         spawn "sh" "-c" r#"
             bemenu -p 'Add to favorites' < /dev/null >> "$1"
         "# "sh" "/home/hskim/.favorite-sites"
@@ -61,6 +61,18 @@ binds {
     Mod+Shift+Up    { move-window-up; }
     Mod+Shift+Right { move-column-right; }
 
+    Mod+Ctrl+h { focus-monitor-left; }
+    Mod+Ctrl+l { focus-monitor-right; }
+
+    Mod+Ctrl+Left { focus-monitor-left; }
+    Mod+Ctrl+Right { focus-monitor-right; }
+
+    Mod+Shift+Ctrl+h { move-window-to-monitor-left; }
+    Mod+Shift+Ctrl+l { move-window-to-monitor-right; }
+
+    Mod+Shift+Ctrl+Left { move-window-to-monitor-left; }
+    Mod+Shift+Ctrl+Right { move-window-to-monitor-right; }
+
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
 
@@ -71,6 +83,8 @@ binds {
 
     Mod+Space { switch-focus-between-floating-and-tiling; }
     Mod+Shift+Space { toggle-window-floating; }
+
+    Mod+o { toggle-overview; }
 
     // workspace
     Mod+Page_Down { focus-workspace-down; }
@@ -94,8 +108,11 @@ binds {
     XF86MonBrightnessDown { spawn "swayosd-client" "--brightness" "lower"; }
     XF86MonBrightnessUp { spawn "swayosd-client" "--brightness" "raise"; }
 
-    Mod+o { spawn "swaylock"; }
-    Mod+Shift+o { spawn "sh" "-c" "swaylock & sleep 1 && niri msg action power-off-monitors"; }
+    Mod+Backspace { spawn "swaylock"; }
+    Mod+Shift+Backspace hotkey-overlay-title="Lock and power off monitors" { 
+        spawn "sh" "-c" \
+        "swaylock & sleep 1 && niri msg action power-off-monitors";
+    }
 }
 
 input {
@@ -111,10 +128,19 @@ input {
         accel-speed 0
         click-method "clickfinger"
     }
+
+    mouse {
+        accel-speed 0
+    }
 }
 
 output "eDP-1" {
     scale 1.2
+}
+
+output "HP Inc. HP X27q 6CM1500HVD" {
+    scale 1.2
+    mode "2560x1440@143.999"
 }
 
 switch-events {
