@@ -181,3 +181,8 @@ window-rule {
     match app-id="firefox"
     open-maximized true
 }
+
+window-rule {
+    match app-id="org.pulseaudio.pavucontrol"
+    default-column-width { proportion 0.33333; }
+}
