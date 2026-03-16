@@ -26,6 +26,10 @@ binds {
     Mod+Shift+p { spawn "bemenu-run"; }
     Mod+e { spawn "thunar"; }
     Mod+Backslash { spawn "firefox-bin"; }
+    Print { screenshot; }
+    Alt+Print { screenshot-window; }
+    Shift+Print { screenshot-screen; }
+
     Mod+i hotkey-overlay-title="Spawn favorites" {
         spawn "sh" "-c" r#"
             choice="$(bemenu -p "$1" < "$2")";
