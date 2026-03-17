@@ -165,7 +165,7 @@ output "HP Inc. HP X27q 6CM1500HVD" {
 
 switch-events {
     lid-close {
-        spawn "swaylock";
+        spawn "sh" "-c" "wpctl set-mute @DEFAULT_AUDIO_SINK@ 1; swaylock";
     }
 }
 
