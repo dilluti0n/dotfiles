@@ -19,6 +19,8 @@ spawn-at-startup "swayidle" "-w" \
    "resume" "niri msg action power-on-monitors" \
    "before-sleep" "swaylock -f" \
 
+prefer-no-csd
+
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+Return { spawn "foot"; }
