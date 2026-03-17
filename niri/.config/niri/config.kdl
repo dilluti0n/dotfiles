@@ -184,7 +184,7 @@ cursor {
 
 window-rule {
     match app-id="firefox"
-    open-maximized true
+    open-maximized false
 }
 
 window-rule {
