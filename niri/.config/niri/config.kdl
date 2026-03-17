@@ -31,6 +31,9 @@ binds {
     Print { screenshot; }
     Alt+Print { screenshot-window; }
     Shift+Print { screenshot-screen; }
+    Mod+b hotkey-overlay-title="Toggle waybar" {
+        spawn "pkill" "-SIGUSR1" "waybar";
+    }
 
     Mod+i hotkey-overlay-title="Spawn favorites" {
         spawn "sh" "-c" r#"
