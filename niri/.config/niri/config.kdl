@@ -130,7 +130,7 @@ binds {
     }
 
     Mod+Backspace { spawn "swaylock"; }
-    Mod+Shift+Backspace allow-when-locked=true {
+    Mod+Shift+Backspace hotkey-overlay-title="Power off monitors" allow-when-locked=true {
         spawn "niri" "msg" "action" "power-off-monitors";
     }
 }
