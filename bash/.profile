@@ -4,11 +4,8 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export NPM_CONFIG_PREFIX=$HOME/.local/
 export PATH="$NPM_CONFIG_PREFIX/bin:$PATH"
 
-export DMENU_FONT="Iosevka Term:size=10"
-
 export GPG_TTY="$(tty)"
 eval $(keychain --eval --agents ssh)
-
 
 # # TEMP for chromium (ozone-platform=wayland is unstable)
 # XDG_SESSION_TYPE="x11"
@@ -46,9 +43,7 @@ if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
 fi
 
 if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
-    # export GTK_IM_MODULE=xim
-    # discord --start-minimized &
-
+    unset GPG_TTY
     _dm="$HOME/.exec-dm"
     [ -f "$_dm" ] && . "$_dm"
     unset _dm

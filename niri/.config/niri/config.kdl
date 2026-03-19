@@ -48,7 +48,7 @@ binds {
     }
 
     Mod+Shift+c { quit skip-confirmation=false; }
-    Mod+Shift+q { close-window; }
+    Mod+q { close-window; }
 
     Mod+h { focus-column-left; }
     Mod+j { focus-window-down; }
