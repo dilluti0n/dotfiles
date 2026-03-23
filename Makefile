@@ -1,7 +1,5 @@
 STOW := stow
 GUI_DEPS := mako foot bash yt-dlp xdg waybar emacs vim git swaylock
-SWAY_DEPS := kanshi $(GUI_DEPS)
-NIRI_DEPS := $(GUI_DEPS)
 PKGS := $(GUI_DEPS) sway niri kanshi
 
 .PHONY: all
@@ -11,9 +9,9 @@ all: niri
 $(PKGS):
 	$(STOW) $@
 
-sway: $(SWAY_DEPS)
+sway: $(GUI_DEPS)
 
-niri: $(NIRI_DEPS)
+niri: kanshi $(GUI_DEPS)
 
 .PHONY: unstow
 unstow:
