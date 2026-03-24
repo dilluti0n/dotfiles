@@ -29,15 +29,15 @@
         "format": "{name}"
     },
     "mpris": {
-        "format": "MPRIS {player}",
-        "format-paused": "MPRIS {player} (PAUSED)",
+        "format": "Mpris {player}",
+        "format-paused": "Mpris {player} (PAUSED)",
         "player-icons": {
             "default": ""
         },
         "status-icons": {
-            "playing": "PLAY",
-            "paused": "PAUSE",
-            "stopped": "STOP"
+            "playing": "Playing",
+            "paused": "Paused",
+            "stopped": "Stopped"
         },
         "max-length": 25
     },
@@ -46,10 +46,10 @@
         "tooltip-format": "{:%Y-%m-%d | %H:%M}"
     },
     "cpu": {
-        "format": "CPU {usage}%"
+        "format": "{usage}%"
     },
     "memory": {
-        "format": "MEM {percentage}%"
+        "format": "{percentage}%"
     },
     "temparature": {
         "format": "{temperatureC}",
@@ -58,25 +58,25 @@
     "battery": {
         "bat": "BAT0",
         "interval": 5,
-        "format": "BAT {capacity}%",
-        "format-charging": "CHARGING {capacity}%",
-        "format-plugged": "PLUGGED {capacity}%",
-        "format-alt": "BAT {time}"
+        "format": "{capacity}%",
+        "format-charging": "C {capacity}%",
+        "format-plugged": "P {capacity}%",
+        "format-alt": "{time}"
     },
     "network#wlan": {
         "interface": "wlan0",
-        "format-wifi": "WIFI {essid}",
-        "format-disconnected": "WIFI N/A",
+        "format-wifi": "Wifi {essid}",
+        "format-disconnected": "Wifi N/A",
         "on-click": "killall -q iwgtk || iwgtk"
     },
     "network#eth": {
         "interface": "enp1s0f0",
-        "format-ethernet": "ETH {ifname}",
+        "format-ethernet": "Eth {ifname}",
         "format-disconnected": ""
     },
     "pulseaudio": {
-        "format": "VOL {volume}%",
-        "format-muted": "MUTED",
+        "format": "V {volume}%",
+        "format-muted": "Muted",
         "on-click": "killall -q pavucontrol || pavucontrol"
     },
     "tray": {
@@ -84,7 +84,7 @@
         "sapcing": 10
     },
     "custom/bzmenu": {
-        "format": "BZMENU",
+        "format": "Bluetooth",
         "on-click": "bzmenu -l bemenu",
         "tooltip": false
     }

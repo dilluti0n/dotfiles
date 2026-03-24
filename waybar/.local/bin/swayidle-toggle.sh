@@ -19,14 +19,14 @@ case "$1" in
     status)
         PID=$(get_pid)
         if [ -z "$PID" ]; then
-            echo '{"text": "dead", "class": "dead"}'
+            echo '{"text": "Dead", "class": "dead"}'
             exit 0
         fi
         STATE=$(awk '/^State:/ {print $2}' /proc/$PID/status)
         if [ "$STATE" = "T" ]; then
-            echo '{"text": "STOP", "class": "stopped"}'
+            echo '{"text": "Stopped", "class": "stopped"}'
         else
-            echo '{"text": "RUN", "class": "running"}'
+            echo '{"text": "Running", "class": "running"}'
         fi
         ;;
 esac
