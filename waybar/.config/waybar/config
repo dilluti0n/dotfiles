@@ -12,18 +12,18 @@
         "memory",
         "temperature",
         "battery",
+        "idle_inhibitor",
         "custom/swayidle",
         "tray",
         "clock"
     ],
 
-    "custom/swayidle": {
-        "exec": "swayidle-toggle.sh status",
-        "interval": "once",
-        "signal": 8,
-        "on-click": "swayidle-toggle.sh toggle",
-        "return-type": "json",
-        "tooltip": false
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "Idle off",
+            "deactivated": "Idle on"
+        }
     },
     "sway/workspaces": {
         "format": "{name}"
