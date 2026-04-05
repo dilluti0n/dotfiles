@@ -28,6 +28,7 @@ binds {
     Mod+Shift+p { spawn "bemenu-run"; }
     Mod+e { spawn "thunar"; }
     Mod+Backslash { spawn "firefox-bin"; }
+    Mod+Shift+Backslash { spawn "emacs"; }
     Print { screenshot; }
     Alt+Print { screenshot-window; }
     Shift+Print { screenshot-screen; }
