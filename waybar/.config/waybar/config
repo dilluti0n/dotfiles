@@ -84,7 +84,7 @@
         "sapcing": 10
     },
     "custom/bzmenu": {
-        "format": "Bluetooth",
+        "format": "Bzmenu",
         "on-click": "bzmenu -l bemenu",
         "tooltip": false
     }
