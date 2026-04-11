@@ -61,7 +61,7 @@ cpapi() {
 }
 
 edt() {
-    XMODIFIRES=@im=none GTK_IM_MODULE=gtk-im-context-simple setsid emacs &>/dev/null $@
+    XMODIFIERS=@im=none GTK_IM_MODULE=gtk-im-context-simple setsid emacs &>/dev/null $@
 }
 
 magit() {
