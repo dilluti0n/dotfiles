@@ -60,10 +60,6 @@ cpapi() {
     fi
 }
 
-edt() {
-    XMODIFIERS=@im=none GTK_IM_MODULE=gtk-im-context-simple setsid emacs &>/dev/null $@
-}
-
 magit() {
     local _path=$(realpath "${1:-.}")
 
