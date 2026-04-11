@@ -13,3 +13,5 @@
 	editor = vim
 [init]
 	defaultBranch = master
+[github]
+	user = dilluti0n
