@@ -54,3 +54,26 @@ Channel gmail-sent
 Channel gmail-drafts
 Channel gmail-trash
 Channel gmail-all
+
+IMAPAccount fastmail
+Host imap.fastmail.com
+Port 993
+User hskim@dilluti0n.com
+PassCmd "pass show hskim/fastmail.com | awk '/^app-password-eps:/ {print $2}'"
+TLSType IMAPS
+
+IMAPStore fastmail-remote
+Account fastmail
+
+MaildirStore fastmail-local
+SubFolders Verbatim
+Path ~/Mail/fastmail/
+Inbox ~/Mail/fastmail/Inbox
+
+Channel fastmail
+Far :fastmail-remote:
+Near :fastmail-local:
+Patterns *
+Create Both
+Expunge Both
+SyncState *

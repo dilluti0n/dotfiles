@@ -9,7 +9,10 @@ all: niri
 $(PKGS):
 	$(STOW) $@
 
-emacs: msmtp
+.PHONY: mail
+mail: msmtp mbsync
+
+emacs: mail
 
 sway: $(GUI_DEPS)
 
