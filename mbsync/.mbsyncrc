@@ -1,0 +1,56 @@
+IMAPAccount gmail
+Host imap.gmail.com
+User hskimse1@gmail.com
+PassCmd "pass show hskim/mutt@google"
+TLSType IMAPS
+AuthMechs LOGIN
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/Mail/gmail/
+Inbox ~/Mail/gmail/INBOX
+SubFolders Verbatim
+
+Channel gmail-inbox
+Far :gmail-remote:INBOX
+Near :gmail-local:INBOX
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-sent
+Far ":gmail-remote:[Gmail]/보낸편지함"
+Near :gmail-local:Sent
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-drafts
+Far ":gmail-remote:[Gmail]/임시보관함"
+Near :gmail-local:Drafts
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-trash
+Far ":gmail-remote:[Gmail]/휴지통"
+Near :gmail-local:Trash
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-all
+Far ":gmail-remote:[Gmail]/전체보관함"
+Near :gmail-local:Archive
+Create Both
+Expunge Both
+SyncState *
+
+Group gmail
+Channel gmail-inbox
+Channel gmail-sent
+Channel gmail-drafts
+Channel gmail-trash
+Channel gmail-all
