@@ -16,7 +16,7 @@ Inbox ~/Mail/fastmail/Inbox
 Channel fastmail
 Far :fastmail-remote:
 Near :fastmail-local:
-Patterns * !"Spam" !"Drafts"
+Patterns * !"Spam"
 Create Both
 Expunge Both
 SyncState *

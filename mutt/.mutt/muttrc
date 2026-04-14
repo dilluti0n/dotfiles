@@ -69,7 +69,7 @@ set mail_check=60
 set imap_keepalive=300
 
 set imap_user = "hskimse1@gmail.com"
-set imap_pass = "`pass show hskim/mutt@google`"
+set imap_pass = "`pass show hskim/gmail.com/base | awk '/^app-password-mutt:/ {print $2}'`"
 
 set folder    = "imaps://imap.gmail.com/"
 set spoolfile = "imaps://imap.gmail.com/INBOX"
@@ -114,7 +114,7 @@ subscribe "gnupg-.*@gnupg\.org"
   
 # SMTP mailing configuration (for sending mail)
 set smtp_url=smtps://hskimse1@gmail.com@smtp.gmail.com:465/
-set smtp_pass="`pass show hskim/mutt@google`"
+set smtp_pass="`pass show hskim/gmail.com/base | awk '/^app-password-mutt:/ {print $2}'`"
 
 # gmail
 set copy=no

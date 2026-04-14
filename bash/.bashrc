@@ -199,7 +199,7 @@ ssh-enroll() {
     eval $(keychain --eval --agents ssh)
 
     if ! ssh-add -l >/dev/null 2>&1; then
-        pass show ssh/eps | ssh-add -
-        pass show ssh/guru | ssh-add -
+        pass show hskim/misc/ssh/eps | ssh-add -
+        pass show hskim/misc/ssh/guru | ssh-add -
     fi
 }
