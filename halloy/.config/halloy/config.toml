@@ -6,7 +6,7 @@
 [servers.libera]
 nickname = "dilluti0n"
 server = "irc.libera.chat"
-channels = ["#gentoo" "##politics" "#libssh" "#bitcoin" "#emacs" "##math" "#linux"]
+channels = ["#gentoo", "##politics", "#libssh", "#bitcoin", "#emacs", "##math", "#linux"]
 port = 6697
 use_tls = true
 
