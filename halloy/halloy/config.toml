@@ -1,0 +1,15 @@
+# Halloy config.
+#
+# For a complete list of available options,
+# please visit https://halloy.chat/configuration.html
+
+[servers.libera]
+nickname = "dilluti0n"
+server = "irc.libera.chat"
+channels = ["#gentoo" "##politics" "#libssh" "#bitcoin" "#emacs" "##math" "#linux"]
+port = 6697
+use_tls = true
+
+[servers.libera.sasl.plain]
+username = "dilluti0n"
+password_command = "pass show hskim/irc.libera.chat | head -n1"

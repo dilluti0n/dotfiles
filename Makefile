@@ -1,6 +1,6 @@
 STOW := stow
 PKGS := $(patsubst %/,%,$(wildcard */))
-GUI_DEPS := mako foot bash yt-dlp xdg waybar emacs vim git swaylock
+GUI_DEPS := mako foot bash yt-dlp xdg waybar emacs vim git swaylock halloy
 
 .PHONY: all
 all: niri
@@ -14,9 +14,9 @@ mail: msmtp mbsync
 
 emacs: mail
 
-sway: $(GUI_DEPS)
+sway: kanshi $(GUI_DEPS)
 
-niri: kanshi $(GUI_DEPS)
+niri: $(GUI_DEPS)
 
 .PHONY: unstow
 unstow:
