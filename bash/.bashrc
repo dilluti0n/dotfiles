@@ -223,5 +223,6 @@ tmpgnupg() (
     trap 'rm -rf $tmp' EXIT
     chmod 700 $tmp
 
+    echo $tmp will be removed at exit >&2
     env GNUPGHOME=$tmp PS1="(GNUPGHOME=$tmp)$ " bash --norc
 )
