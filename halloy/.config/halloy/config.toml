@@ -3,6 +3,10 @@
 # For a complete list of available options,
 # please visit https://halloy.chat/configuration.html
 
+[font]
+family = "Cascadia Code"
+size = 16
+
 [servers.libera]
 nickname = "dilluti0n"
 server = "irc.libera.chat"
