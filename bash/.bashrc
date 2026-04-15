@@ -203,3 +203,25 @@ ssh-enroll() {
         pass show hskim/misc/ssh/guru | ssh-add -
     fi
 }
+
+mountluks() (
+    set -eu
+
+    local luksp="luks_$1"
+    local mp="$2"
+
+    sudo cryptsetup open "$1" "$luksp"
+    sudo mount "/dev/mapper/$luksp" "$mp"
+
+    echo "$mp"
+)
+
+tmpgnupg() (
+    set -eu
+
+    local tmp=$(mktemp -d /dev/shm/gpg-XXXXXX)
+    trap 'rm -rf $tmp' EXIT
+    chmod 700 $tmp
+
+    env GNUPGHOME=$tmp PS1="(GNUPGHOME=$tmp)$ " bash --norc
+)
