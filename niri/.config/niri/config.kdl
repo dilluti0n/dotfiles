@@ -53,6 +53,11 @@ binds {
         "# "sh" "/home/hskim/.favorite-sites"
     }
 
+    Mod+S { spawn "niri-sidebar" "toggle-window"; }
+    Mod+Shift+S { spawn "niri-sidebar" "toggle-visibility"; }
+    Mod+Ctrl+S { spawn "niri-sidebar" "flip"; }
+    Mod+Alt+R { spawn "niri-sidebar" "reorder"; }
+
     Mod+Shift+c { quit skip-confirmation=false; }
     Mod+q { close-window; }
 
