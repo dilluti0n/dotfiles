@@ -221,3 +221,19 @@ tmpgnupg() (
     echo $tmp will be removed at exit >&2
     env GNUPGHOME=$tmp PS1="(GNUPGHOME=$tmp)$ " bash --norc
 )
+
+unmask() {
+    [ -z "$1" ] && return 1
+
+    local suffix="${1##*/}"
+    local af="/etc/portage/package.accept_keywords/$suffix"
+
+    if [ -f "$af" ]; then
+        echo "Err: $af already exists. Content:" >&2
+        cat "$af" >&2
+
+        return 1
+    fi
+
+    echo "$1 ~amd64" | sudo tee "$af" >/dev/null
+}
