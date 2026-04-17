@@ -1,1 +1,3 @@
-[[ -f .profile ]] && source .profile
+profile="$HOME/.profile"
+
+[[ -f "$profile" ]] && source "$profile"

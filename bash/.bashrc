@@ -16,8 +16,6 @@ fi
 
 
 # Put your fun stuff here.
-[ -f ~/.keychain/${HOSTNAME}-sh ] && . ~/.keychain/${HOSTNAME}-sh
-
 export HISTCONTROL="ignoreboth"
 export HISTSIZE="99999"
 export FZF_DEFAULT_COMMAND='fd --type file'
@@ -196,10 +194,7 @@ fzargs() {
 
 # ssh-agent
 ssh-enroll() {
-    eval $(keychain --eval --agents ssh)
-
-    if ! ssh-add -l >/dev/null 2>&1; then
-        pass show hskim/misc/ssh/eps | ssh-add -
+    if ! ssh-add -l | grep -q guru; then
         pass show hskim/misc/ssh/guru | ssh-add -
     fi
 }
@@ -207,7 +202,7 @@ ssh-enroll() {
 mountluks() (
     set -eu
 
-    local luksp="luks_$1"
+    local luksp="luks_${1##*/}"
     local mp="$2"
 
     sudo cryptsetup open "$1" "$luksp"

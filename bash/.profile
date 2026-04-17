@@ -5,7 +5,8 @@ export NPM_CONFIG_PREFIX=$HOME/.local/
 export PATH="$NPM_CONFIG_PREFIX/bin:$PATH"
 
 export GPG_TTY="$(tty)"
-eval $(keychain --eval --agents ssh)
+gpgconf --launch gpg-agent
+export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 
 # # TEMP for chromium (ozone-platform=wayland is unstable)
 # XDG_SESSION_TYPE="x11"
