@@ -1,6 +1,6 @@
 [Added Associations]
 application/json=org.kde.kwrite.desktop;
-application/pdf=librewolf.desktop;
+application/pdf=com.github.xournalpp.xournalpp.desktop;librewolf.desktop;
 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=onlyoffice-desktopeditors.desktop;org.libreoffice.LibreOffice.calc.desktop;org.kde.ark.desktop;sh.ppy.osu.desktop;org.prismlauncher.PrismLauncher.desktop;com.yacreader.YACReader.desktop;
 application/x-bittorrent=org.qbittorrent.qBittorrent.desktop;org.kde.ktorrent.desktop;
 application/x-docbook+xml=org.kde.kwrite.desktop;
@@ -136,6 +136,7 @@ x-scheme-handler/http=librewolf.desktop;firefox-bin.desktop;brave-browser.deskto
 x-scheme-handler/https=librewolf.desktop;com.brave.Browser.desktop;firefox-bin.desktop;chromium-browser-chromium.desktop;org.chromium.Chromium.desktop;xfce4-web-browser.desktop;
 x-scheme-handler/nc=com.nextcloud.desktopclient.nextcloud.desktop;
 x-scheme-handler/noi=Noi.desktop;
+application/pgp-signature=emacsclient.desktop;
 
 [Default Applications]
 application/json=org.kde.kwrite.desktop;
@@ -287,3 +288,6 @@ image/png=imv-custom.desktop
 image/jpeg=imv-custom.desktop
 image/gif=imv-custom.desktop
 image/webp=imv.desktop
+x-scheme-handler/readest=readest-handler.desktop
+x-scheme-handler/mailto=emacsclient-mail.desktop
+application/pgp-signature=emacsclient.desktop
