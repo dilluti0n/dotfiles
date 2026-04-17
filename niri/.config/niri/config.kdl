@@ -19,6 +19,7 @@ spawn-at-startup "swayidle" "-w" \
    "resume" "niri msg action power-on-monitors" \
    "before-sleep" "swaylock -f"
 spawn-at-startup "wlsunset"
+spawn-at-startup "gpg-connect-agent" "updatestartuptty" "/bye"
 
 prefer-no-csd
 
