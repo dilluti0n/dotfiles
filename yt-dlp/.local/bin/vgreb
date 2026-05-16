@@ -165,6 +165,7 @@ case "$1" in
         echo "  download* <url> Download <url> via yt-dlp"
         echo "  history         Show history."
         echo "  log       [id]  Show log of [id]. If [id] is not given, show recent one."
+        echo "  file      [id]  Open file of [id] via xdg-open. If [id] is not given, show recent one."
         echo "  help            Show this help."
         exit 0
         ;;
