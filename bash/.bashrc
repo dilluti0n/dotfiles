@@ -79,9 +79,9 @@ stopwatch() {
 
 show-deps() {
     if (( "$#" < 1 )); then
-        echo "Usage: $0 <package-name>"
+        echo "Usage: show-deps <package-name>"
         echo "Prints installed packages that depend on given package."
-        exit 1
+        return 1
     fi
     comm -12 <(equery -q d -D --format '$cp' "$1" |sed 's/-[0-9][^/]*$//' |sort -u) \
     <(sort /var/lib/portage/world)
@@ -237,3 +237,24 @@ unmask() {
 
     echo "$1 ~amd64" | sudo tee "$af" >/dev/null
 }
+
+dbrk() (
+    DPIBREAK_PID=$(sudo cat /run/dpibreak.pid 2>/dev/null)
+
+    if [ -n "$DPIBREAK_PID" ]; then
+        sudo kill $DPIBREAK_PID 2>/dev/null
+
+        # wait until it is actually killed
+        sudo tail --pid=$DPIBREAK_PID -f /dev/null
+
+        echo "Killed last dpibreak($DPIBREAK_PID) session"
+    fi
+
+    sudo dpibreak -o 0,5 "$@"
+)
+
+spawn() {
+    niri msg action spawn -- "$(realpath "$1")" ${@:2}
+}
+
+export PATH="$PATH:/home/hskim/.foundry/bin"
