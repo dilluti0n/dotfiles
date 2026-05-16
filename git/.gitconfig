@@ -15,3 +15,5 @@
 	defaultBranch = master
 [github]
 	user = dilluti0n
+[alias]
+	show-tree = "!f() { git cat-file commit $1 | head -n1 | awk '{ print $2 }'; }; f"
