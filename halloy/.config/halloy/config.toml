@@ -7,13 +7,10 @@
 family = "Cascadia Code"
 size = 16
 
-[servers.libera]
-nickname = "dilluti0n"
-server = "irc.libera.chat"
-channels = ["#gentoo", "##politics", "#libssh", "#bitcoin", "#emacs", "##math", "#linux"]
-port = 6697
-use_tls = true
+[servers.soju]
+nickname = "hskim"
+server = "irc.dilluti0n.com"
 
-[servers.libera.sasl.plain]
-username = "dilluti0n"
-password_command = "pass show hskim/irc.libera.chat | head -n1"
+[servers.soju.sasl.plain]
+username = "hskim"
+password_command = "pass show hskim/misc/soju | head -n1"
