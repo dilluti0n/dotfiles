@@ -147,9 +147,8 @@ calc() {
 }
 
 api() {
-    local crd="api/$1"
-    . <(pass show "$crd")
-    export PS1="($crd) $PS1"
+    eval $(pass show hskim/misc/llm | grep -i "$1")
+    export PS1="($1) $PS1"
 }
 
 getlink() {
@@ -255,6 +254,10 @@ dbrk() (
 
 spawn() {
     niri msg action spawn -- "$(realpath "$1")" ${@:2}
+}
+
+alpha() {
+    ssh alpha -t sudo TERM=xterm tmux
 }
 
 export PATH="$PATH:/home/hskim/.foundry/bin"
