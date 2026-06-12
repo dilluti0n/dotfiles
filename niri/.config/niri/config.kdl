@@ -202,3 +202,11 @@ window-rule {
     match app-id="org.twosheds.iwgtk"
     default-column-width { proportion 0.33333; }
 }
+
+// pickers
+window-rule {
+    match app-id="xdg-desktop-portal-gtk"
+    open-floating true
+    default-column-width { fixed 900; }
+    default-window-height { fixed 650; }
+}
