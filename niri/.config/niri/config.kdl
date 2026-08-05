@@ -24,9 +24,9 @@ spawn-at-startup "gpg-connect-agent" "updatestartuptty" "/bye"
 
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
-    Mod+Return { spawn "ghostty"; }
-    Mod+p { spawn "j4-dmenu-desktop" "-d" "bemenu -p Applications -i"; }
-    Mod+Shift+p { spawn "bemenu-run"; }
+    Mod+Return { spawn "foot"; }
+    Mod+Shift+p { spawn "j4-dmenu-desktop" "-d" "bemenu -p Applications -i"; }
+    Mod+p { spawn "bemenu-run"; }
     Mod+m { spawn "pass-bemenu"; }
     Mod+e { spawn "thunar"; }
     Mod+Backslash { spawn "firefox-bin"; }
