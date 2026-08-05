@@ -248,7 +248,8 @@ dbrk() (
         echo "Killed last dpibreak($DPIBREAK_PID) session"
     fi
 
-    sudo dpibreak -o 0,5 "$@"
+    sudo dpibreak -o 0,5 "$@" &
+    sudo nft insert rule inet dpibreak OUTPUT oif "lo" return
 )
 
 spawn() {

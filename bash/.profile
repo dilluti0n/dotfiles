@@ -43,6 +43,8 @@ if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
     fi
 fi
 
+export NP=/mnt/nas/hosting
+
 if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
     unset GPG_TTY
     _dm="$HOME/.exec-dm"
