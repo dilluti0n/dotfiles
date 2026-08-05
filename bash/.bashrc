@@ -147,7 +147,7 @@ calc() {
 
 api() {
     eval $(pass show hskim/misc/llm | grep -i "$1")
-    export PS1="($1) $PS1"
+    (( $? == 0 )) && export PS1="($1) $PS1"
 }
 
 getlink() {
