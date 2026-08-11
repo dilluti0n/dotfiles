@@ -1,6 +1,6 @@
 STOW := stow
 PKGS := $(patsubst %/,%,$(wildcard */))
-GUI_DEPS := mako foot bash yt-dlp xdg waybar emacs vim git swaylock halloy
+GUI_DEPS := mako foot bash yt-dlp xdg waybar emacs vim git swaylock halloy chzzkd
 
 .PHONY: all
 all: niri
