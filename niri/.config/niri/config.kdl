@@ -19,6 +19,7 @@ spawn-at-startup "swayidle" "-w" \
    "before-sleep" "swaylock -f"
 spawn-at-startup "wlsunset"
 spawn-at-startup "gpg-connect-agent" "updatestartuptty" "/bye"
+spawn-sh-at-startup "RUST_LOG=info chzzkd >/dev/null 2>>$HOME/.local/state/chzzkd.log"
 
 //prefer-no-csd
 
@@ -26,6 +27,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+Return { spawn "foot"; }
     Mod+Shift+p { spawn "j4-dmenu-desktop" "-d" "bemenu -p Applications -i"; }
+    Mod+c { spawn "pkill" "-HUP" "chzzkd"; }
     Mod+p { spawn "bemenu-run"; }
     Mod+m { spawn "pass-bemenu"; }
     Mod+e { spawn "thunar"; }
