@@ -1,15 +1,21 @@
-timeout = 10
+timeout = 100
 
 [hooks]
 went_open = '''
-url="https://chzzk.naver.com/live/$CHZZKD_ID"
+on_click() {
+  url="https://chzzk.naver.com/live/$CHZZKD_ID"
+  mpv $url &
+  # Open chat window
+  thorium --app="$url/chat" &
+}
+
 action=$(notify-send -a chzzkd \
   -A default="mpv" \
   "$CHZZKD_ALIAS" \
   "$CHZZKD_LIVE_TITLE")
 
 case "$action" in
-  default) mpv "$url" ;;
+  default) on_click ;;
 esac
 '''
 went_close = 'notify-send -a chzzkd "$CHZZKD_ALIAS: bye"'
