@@ -1,7 +1,7 @@
 [Added Associations]
 application/json=org.kde.kwrite.desktop;
 application/pdf=com.github.xournalpp.xournalpp.desktop;librewolf.desktop;
-application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=onlyoffice-desktopeditors.desktop;org.libreoffice.LibreOffice.calc.desktop;org.kde.ark.desktop;sh.ppy.osu.desktop;org.prismlauncher.PrismLauncher.desktop;com.yacreader.YACReader.desktop;
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=onlyoffice-desktopeditors.desktop;org.libreoffice.LibreOffice.calc.desktop;org.kde.ark.desktop;sh.ppy.osu.desktop;org.prismlauncher.PrismLauncher.desktop;com.yacreader.YACReader.desktop;libreoffice25.8-calc.desktop;
 application/x-bittorrent=org.qbittorrent.qBittorrent.desktop;org.kde.ktorrent.desktop;
 application/x-docbook+xml=org.kde.kwrite.desktop;
 application/x-matroska=mpv.desktop;vlc.desktop;
@@ -130,18 +130,19 @@ x-scheme-handler/binance=binance.desktop;Binance.desktop;
 x-scheme-handler/chrome=firefox-bin.desktop;
 x-scheme-handler/discord-1221314350216646828=discord-1221314350216646828.desktop;
 x-scheme-handler/discord-455712169795780630=discord-455712169795780630.desktop;
-x-scheme-handler/freetube=freetube.desktop;FreeTube.desktop;
+x-scheme-handler/freetube=FreeTube.desktop;
 x-scheme-handler/geo=google-maps-geo-handler.desktop;
 x-scheme-handler/http=librewolf.desktop;firefox-bin.desktop;brave-browser.desktop;com.brave.Browser.desktop;chromium-browser-chromium.desktop;chromium-browser.desktop;org.chromium.Chromium.desktop;xfce4-web-browser.desktop;
 x-scheme-handler/https=librewolf.desktop;com.brave.Browser.desktop;firefox-bin.desktop;chromium-browser-chromium.desktop;org.chromium.Chromium.desktop;xfce4-web-browser.desktop;
 x-scheme-handler/nc=com.nextcloud.desktopclient.nextcloud.desktop;
 x-scheme-handler/noi=Noi.desktop;
 application/pgp-signature=emacsclient.desktop;
+application/pgp-keys=org.xfce.mousepad.desktop;
 
 [Default Applications]
 application/json=org.kde.kwrite.desktop;
 application/pdf=org.pwmt.zathura.desktop
-application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=onlyoffice-desktopeditors.desktop;
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=libreoffice25.8-calc.desktop
 application/x-bittorrent=org.qbittorrent.qBittorrent.desktop;
 application/x-docbook+xml=org.kde.kwrite.desktop;
 application/x-extension-htm=firefox-bin.desktop
@@ -291,3 +292,4 @@ image/webp=imv.desktop
 x-scheme-handler/readest=readest-handler.desktop
 x-scheme-handler/mailto=emacsclient-mail.desktop
 application/pgp-signature=emacsclient.desktop
+application/pgp-keys=org.xfce.mousepad.desktop
