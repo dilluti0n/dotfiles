@@ -31,7 +31,7 @@ binds {
     Mod+p { spawn "bemenu-run"; }
     Mod+m { spawn "pass-bemenu"; }
     Mod+e { spawn "thunar"; }
-    Mod+Backslash { spawn "firefox-bin"; }
+    Mod+Backslash { spawn "www-client"; }
     Mod+Shift+Backslash { spawn "edt"; }
     Print { screenshot; }
     Alt+Print { screenshot-window; }
@@ -47,7 +47,7 @@ binds {
         spawn "sh" "-c" r#"
             choice="$(bemenu -p "$1" < "$2")";
             [ -n "$choice" ] && exec "$1" --new-window "$choice"
-        "# "sh" "firefox-bin" "/home/hskim/.favorite-sites"
+        "# "sh" "www-client" "/home/hskim/.favorite-sites"
     }
     Mod+Shift+i hotkey-overlay-title="Add to favorites" {
         spawn "sh" "-c" r#"
