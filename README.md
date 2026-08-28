@@ -4,11 +4,12 @@ Dilluti0n's dotfiles
 Why hosting this? I don't know. Isn't this like instagram stories for
 us? Anyway, these are very dirty, so don't use them in real life.
 
+I use these for my Gentoo notebook, and are not used elsewhere. They
+are managed by stow, and dependencies (which aren't properly done) are
+managed through a Makefile.
+
 Notes
 -----
-
-My dotfiles are managed by stow, and dependencies (which aren't
-properly done) are managed through a Makefile.
 
 I execute .exec-dm (a display manager call script) in .profiles when
 the tty is /dev/tty1. For example, niri/.exec-dm is symlinked to
