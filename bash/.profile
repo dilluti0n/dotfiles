@@ -5,6 +5,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export NPM_CONFIG_PREFIX=$HOME/.local/
 export PATH="$NPM_CONFIG_PREFIX/bin:$PATH"
 
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 export GPG_TTY="$(tty)"
 gpgconf --launch gpg-agent
 export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
