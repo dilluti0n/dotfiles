@@ -266,48 +266,16 @@ Return non-nil if successful, nil otherwise."
       company-tooltip-align-annotations nil
       company-require-match 'never)
 ;;
-;; Mail (mu4e with mbsync, msmtp)
+;; Mail
 ;;
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-(require 'mu4e)
-
-(setq mu4e-maildir "~/Mail"
-      mu4e-get-mail-command "mbsync alpha"
-      mu4e-update-interval nil
-      mu4e-change-filenames-when-moving t) ;; mbsync
-
-(setq mu4e-contexts
-      (list
-       (make-mu4e-context
-        :name "alpha"
-        :match-func
-        (lambda (msg)
-          (when msg
-            (string-prefix-p "/alpha" (mu4e-message-field msg :maildir))))
-        :vars '((user-mail-address      . "hskim@dilluti0n.com")
-                (user-full-name         . "Hee-Suk Kim")
-                (mu4e-sent-folder       . "/alpha/Sent")
-                (mu4e-drafts-folder     . "/alpha/Drafts")
-                (mu4e-trash-folder      . "/alpha/Trash")
-                (mu4e-refile-folder     . "/alpha/Archive")
-                (mu4e-sent-messages-behavior . sent)))))
-
-(setq mu4e-context-policy 'pick-first
-      mu4e-compose-context-policy 'pick-first)
 
 (setq mail-user-agent 'mu4e-user-agent
       message-mail-user-agent 'mu4e-user-agent
       read-mail-command 'mu4e)
 
-(setq mu4e-bookmarks
-      '((:name "unread" :query "flag:unread AND NOT flag:trashed" :key ?u)
-        (:name "cgit" :query "to:cgit@lists.zx2c4.com" :key ?c)
-        (:name "opensmtpd" :query "to:misc@opensmtpd.org" :key ?o)
-        (:name "gnupg-devel" :query "to:gnupg-devel@gnupg.org" :key ?p)
-        (:name "bitcoin-dev" :query "to:bitcoindev@googlegroups.com" :key ?b)))
-
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/notmuch")
 (require 'notmuch)
+
 (setq notmuch-fcc-dirs "alpha/Sent"
       notmuch-draft-folder "alpha/Drafts")
 (setq-default notmuch-search-oldest-first nil)
@@ -647,6 +615,10 @@ Return non-nil if successful, nil otherwise."
   (kill-buffer "*sib-log*")
   (kill-buffer "*sib-error*"))
 
+(defun usetab()
+  (interactive)
+  (setq-local sh-basic-offset 8)
+  (indent-tabs-mode t))
 
 ;; end of custom functions
 
