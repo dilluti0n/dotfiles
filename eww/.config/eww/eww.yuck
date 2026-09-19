@@ -7,9 +7,6 @@
 
 (defpoll wlan     :interval "5s"  :initial "N/A" "eww-bar wlan")
 (defpoll eth      :interval "5s"  :initial "" "eww-bar eth")
-(defpoll cpu      :interval "2s"  :initial "0%" "eww-bar cpu")
-(defpoll mem      :interval "5s"  :initial "0%" "eww-bar mem")
-(defpoll temp     :interval "10s" :initial "0" "eww-bar temp")
 (defpoll battery  :interval "5s"  :initial "" "eww-bar battery")
 (defpoll battime  :interval "30s" :initial "" "eww-bar battery-time")
 (defpoll idle     :interval "5s"  :initial "Idle off" "eww-bar idle")
@@ -43,9 +40,17 @@
 (defwidget eth []
   (box :class "mod network" :visible {eth != ""} (label :text eth)))
 
-(defwidget cpu []  (label :class "mod cpu" :text cpu))
-(defwidget mem []  (label :class "mod memory" :text mem))
-(defwidget temp [] (label :class "mod temperature" :text temp))
+(defwidget cpu []  (label :class "mod cpu"  :text "${round(EWW_CPU.avg, 0)}%"))
+(defwidget mem []  (label :class "mod memory" :text "${round(EWW_RAM.used_mem_perc, 0)}%"))
+(defwidget temp []
+  (tooltip
+    (box :class "tt" :orientation "v" :space-evenly false
+         (label :xalign 0 :text "CPU   ${EWW_TEMPS.THINKPAD_CPU}")
+         (label :xalign 0 :text "GPU   ${EWW_TEMPS.AMDGPU_EDGE}")
+         (label :xalign 0 :text "WiFi  ${EWW_TEMPS.ATH11K_HWMON_TEMP1}")
+         (label :xalign 0 :text "SSD   ${round(EWW_TEMPS["NVME_COMPOSITE_WD_PC_SN740_SDDQNQD-1T00-1201_TEMP1"], 0)}"))
+    (label :class {round(EWW_TEMPS.THINKPAD_CPU, 0) > 80 ? "mod temperature hot" : "mod temperature"}
+           :text "${EWW_TEMPS.THINKPAD_CPU} °C")))
 
 (defwidget battery []
   (button :class "mod battery" :onclick "eww update bat-alt=${!bat-alt}"
@@ -84,20 +89,3 @@
   :exclusive true
   :namespace "eww-bar"
   (bar-content :screen screen))
-
-;; ---
-
-(defpoll osd-level :interval "100ms" "eww-bar volume-level")
-
-(defwidget volume-osd []
-  (box :class "osd" :space-evenly false :spacing 8
-    (scale :class "osd-bar" :value osd-level :min 0 :max 101 :active false)
-    (label :class "osd-pct" :text "${osd-level}%")))
-
-(defwindow volume-osd [screen]
-  :monitor screen
-  :geometry (geometry :y "10%" :width "240px" :height "32px" :anchor "bottom center")
-  :stacking "overlay"
-  :focusable false
-  :namespace "eww-osd"
-  (volume-osd))
