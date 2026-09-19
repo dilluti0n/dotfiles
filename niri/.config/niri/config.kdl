@@ -20,7 +20,7 @@ spawn-at-startup "swayidle" "-w" \
 spawn-at-startup "wlsunset"
 spawn-at-startup "gpg-connect-agent" "updatestartuptty" "/bye"
 spawn-at-startup "poweralertd"
-spawn-sh-at-startup "eww && eww-subscribe-monitor"
+spawn-sh-at-startup "eww daemon && eww-subscribe-monitor"
 spawn-sh-at-startup "RUST_LOG=info chzzkd >/dev/null 2>>$HOME/.local/state/chzzkd.log"
 
 //prefer-no-csd
