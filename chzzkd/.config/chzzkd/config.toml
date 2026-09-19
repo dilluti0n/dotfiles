@@ -37,10 +37,6 @@ id = "9381e7d6816e6d915a44a13c0195b202"
 alias = "lck"
 
 [[channel]]
-id = "0b33823ac81de48d5b78a38cdbc0ab94"
-alias = "wolf"
-
-[[channel]]
 id = "42597020c1a79fb151bd9b9beaa9779b"
 alias = "paka"
 
@@ -51,6 +47,10 @@ alias = "qb"
 [[channel]]
 id = "c100f81959d1c17044be0541eed56f5b"
 alias = "megajw"
+
+[[channel]]
+id = "3497a9a7221cc3ee5d3f95991d9f95e9"
+alias = "ralo"
 
 [[channel]]
 id = "b5ed5db484d04faf4d150aedd362f34b"
