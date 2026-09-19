@@ -1,0 +1,58 @@
+// dwm style
+$fg:      #bbbbbb;  // col_gray3
+$bg:      #222222;  // col_gray1
+$sel_fg:  #eeeeee;  // col_gray4
+$sel_bg:  #005577;  // col_cyan
+
+* {
+  all: unset;
+  font-family: "Cascadia Code";
+  font-size: 8pt;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.bar {
+  background-color: $bg;
+  color: $fg;
+  padding: 0;
+}
+
+.mod {
+  padding: 0 5px;   // dwm lrpad/2
+  margin: 0;
+  min-height: 0;
+  color: $fg;
+}
+
+.workspaces {
+  .ws {
+    padding: 0 5px;
+    color: $fg;
+    background-color: $bg;
+    min-height: 0;
+  }
+
+  // dwm SchemeSel
+  .ws.active {
+    color: $sel_fg;
+    background-color: $sel_bg;
+  }
+}
+
+.window,
+.mpris,
+.cpu, .memory, .temperature,
+.clock,
+.idle {
+  color: $fg;
+}
+
+.idle.activated { color: $sel_fg; }
+
+window {
+  background-color: $bg;
+}

@@ -1,0 +1,103 @@
+;; -*- mode: lisp -*-
+
+(deflisten all-workspaces :initial "[]" "eww-bar workspaces")
+(deflisten window     :initial ""   "eww-bar window")
+(deflisten mpris      :initial ""   "eww-bar mpris")
+(deflisten volume     :initial ""   "eww-bar volume")
+
+(defpoll wlan     :interval "5s"  :initial "N/A" "eww-bar wlan")
+(defpoll eth      :interval "5s"  :initial "" "eww-bar eth")
+(defpoll cpu      :interval "2s"  :initial "0%" "eww-bar cpu")
+(defpoll mem      :interval "5s"  :initial "0%" "eww-bar mem")
+(defpoll temp     :interval "10s" :initial "0" "eww-bar temp")
+(defpoll battery  :interval "5s"  :initial "" "eww-bar battery")
+(defpoll battime  :interval "30s" :initial "" "eww-bar battery-time")
+(defpoll idle     :interval "5s"  :initial "Idle off" "eww-bar idle")
+(defpoll clock    :interval "10s" :initial "" "date '+%Y-%m-%d | %H:%M'")
+
+(defvar bat-alt false)
+
+(defwidget workspaces [screen]
+  (box :class "workspaces"
+       (for ws in {jq(all-workspaces,'[.[] | select(.output == "' + screen + '")] | sort_by(.idx)')}
+            (button :onclick "niri msg action focus-workspace ${ws.name}"
+                    :class {ws.active ? "ws active" : "ws"}
+                    "${ws.idx}"))))
+
+(defwidget mpris []
+  (box :class "mod mpris" :visible {mpris != ""}
+       (label :text mpris :limit-width 25 :truncate true)))
+
+(defwidget window []
+  (label :class "mod window" :text window :limit-width 80 :truncate true))
+
+(defwidget volume []
+  (button :class "mod pulseaudio" :onclick "killall -q pavucontrol || pavucontrol &" volume))
+
+(defwidget bzmenu []
+  (button :class "mod bzmenu" :onclick "bzmenu -l bemenu &" "Bzmenu"))
+
+(defwidget wlan []
+  (button :class "mod network" :onclick "killall -q iwgtk || iwgtk &" wlan))
+
+(defwidget eth []
+  (box :class "mod network" :visible {eth != ""} (label :text eth)))
+
+(defwidget cpu []  (label :class "mod cpu" :text cpu))
+(defwidget mem []  (label :class "mod memory" :text mem))
+(defwidget temp [] (label :class "mod temperature" :text temp))
+
+(defwidget battery []
+  (button :class "mod battery" :onclick "eww update bat-alt=${!bat-alt}"
+          {bat-alt ? battime : battery}))
+
+(defwidget idle []
+  (button :class {idle == "Idle off" ? "mod idle activated" : "mod idle"}
+          :onclick "eww-bar idle-toggle"
+          idle))
+
+(defwidget tray []
+  (systray :class "mod tray" :icon-size 11 :spacing 8 :space-evenly false :prepend-new false))
+
+(defwidget clock [] (label :class "mod clock" :text clock))
+
+(defwidget left [screen]
+  (box :space-evenly false :spacing 8 :halign "start"
+       (workspaces :screen screen) (mpris)))
+
+(defwidget center []
+  (box :space-evenly false :halign "center"
+       (window)))
+
+(defwidget right []
+  (box :space-evenly false :spacing 8 :halign "end"
+       (volume) (wlan) (eth) (cpu) (mem) (temp) (battery) (idle) (tray) (clock)))
+
+(defwidget bar-content [screen]
+  (centerbox :class "bar" :orientation "h"
+             (left :screen screen) (center) (right)))
+
+(defwindow bar [screen]
+  :monitor screen
+  :geometry (geometry :x "0" :y "0" :width "100%" :height "18px" :anchor "top center")
+  :stacking "fg"
+  :exclusive true
+  :namespace "eww-bar"
+  (bar-content :screen screen))
+
+;; ---
+
+(defpoll osd-level :interval "100ms" "eww-bar volume-level")
+
+(defwidget volume-osd []
+  (box :class "osd" :space-evenly false :spacing 8
+    (scale :class "osd-bar" :value osd-level :min 0 :max 101 :active false)
+    (label :class "osd-pct" :text "${osd-level}%")))
+
+(defwindow volume-osd [screen]
+  :monitor screen
+  :geometry (geometry :y "10%" :width "240px" :height "32px" :anchor "bottom center")
+  :stacking "overlay"
+  :focusable false
+  :namespace "eww-osd"
+  (volume-osd))

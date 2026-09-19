@@ -1,0 +1,23 @@
+#!/bin/bash
+
+sync_bars() {
+    outs=$(niri msg -j outputs | jq -r 'keys[]')
+    open=$(eww active-windows | cut -d: -f1)
+
+    for o in $outs; do
+        echo "$open" | grep -qx "bar-$o" || \
+            eww open bar --id "bar-$o" --arg screen="$o"
+    done
+
+    for w in $open; do
+        case "$w" in
+        bar-*) echo "$outs" | grep -qx "${w#bar-}" || eww close "$w" ;;
+        esac
+    done
+}
+
+udevadm monitor --udev --subsystem-match=drm | while read -r _; do
+    while read -r -t 0.5 _; do :; done
+    sleep 0.3          # wait niri
+    sync_bars
+done

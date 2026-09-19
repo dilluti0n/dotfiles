@@ -1,0 +1,215 @@
+#!/bin/sh
+
+set -u
+
+WLAN_IF=wlan0
+ETH_IF=enp1s0f0
+BAT=BAT0
+STATE="${XDG_RUNTIME_DIR:-/tmp}/eww-bar"
+
+mkdir -p "$STATE"
+
+emit_workspaces() {
+	niri msg --json workspaces 2>/dev/null | jq -c '
+		sort_by(.output, .idx)
+		| map({idx: .idx,
+		       output: .output,
+		       name: (if .name == null then (.idx|tostring) else .name end),
+		       active: .is_active})' 2>/dev/null || echo '[]'
+}
+
+emit_window() {
+	niri msg --json focused-window 2>/dev/null |
+		jq -r 'if . == null then "" else (.title // "") end' 2>/dev/null || echo ''
+}
+
+case "${1:-}" in
+
+workspaces)
+	emit_workspaces
+	niri msg --json event-stream | while IFS= read -r ev; do
+		case "$ev" in
+		*Workspace*) emit_workspaces ;;
+		esac
+	done
+	;;
+
+window)
+	emit_window
+	niri msg --json event-stream | while IFS= read -r ev; do
+		case "$ev" in
+		*Window* | *Workspace*) emit_window ;;
+		esac
+	done
+	;;
+
+mpris)
+	if ! command -v playerctl >/dev/null 2>&1; then
+		echo ''
+		exec sleep infinity
+	fi
+	echo ''
+	playerctl --follow --format '{{playerName}}|{{status}}' metadata 2>/dev/null |
+		while IFS='|' read -r player status; do
+			if [ -z "$player" ]; then
+				echo ''
+			elif [ "$status" = "Paused" ]; then
+				echo "Mpris $player (PAUSED)"
+			else
+				echo "Mpris $player"
+			fi
+		done
+	;;
+
+volume)
+	emit_volume() {
+		if [ "$(pactl get-sink-mute @DEFAULT_SINK@ 2>/dev/null | awk '{print $2}')" = "yes" ]; then
+			echo "Muted"
+		else
+			pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null |
+				awk 'NR==1 {print "V " $5}'
+		fi
+	}
+	emit_volume
+	pactl subscribe 2>/dev/null | while IFS= read -r ev; do
+		case "$ev" in
+		*"on sink"*) emit_volume ;;
+		esac
+	done
+	;;
+
+wlan)
+	if [ ! -e "/sys/class/net/$WLAN_IF" ]; then
+		echo "N/A"
+		exit 0
+	fi
+	ssid=$(iw dev "$WLAN_IF" link 2>/dev/null | sed -n 's/^[[:space:]]*SSID: //p')
+	[ -n "$ssid" ] && echo "$ssid" || echo "N/A"
+	;;
+
+eth)
+	if [ "$(cat "/sys/class/net/$ETH_IF/operstate" 2>/dev/null)" = "up" ]; then
+		echo "Eth $ETH_IF"
+	else
+		echo ''
+	fi
+	;;
+
+cpu)
+	f="$STATE/cpu"
+	set -- $(awk '/^cpu /{i=$5+$6; t=0; for(n=2;n<=NF;n++) t+=$n; print t, i; exit}' /proc/stat)
+	total=$1
+	idle=$2
+	ptotal=0
+	pidle=0
+	[ -r "$f" ] && read -r ptotal pidle <"$f"
+	echo "$total $idle" >"$f"
+	dt=$((total - ptotal))
+	di=$((idle - pidle))
+	if [ "$dt" -gt 0 ]; then
+		echo "$((100 * (dt - di) / dt))%"
+	else
+		echo "0%"
+	fi
+	;;
+
+mem)
+	awk '/^MemTotal:/{t=$2} /^MemAvailable:/{a=$2} END{printf "%d%%\n", (t-a)*100/t}' /proc/meminfo
+	;;
+
+temp)
+	for h in /sys/class/hwmon/hwmon*; do
+		case "$(cat "$h/name" 2>/dev/null)" in
+		k10temp | coretemp | acpitz)
+			[ -r "$h/temp1_input" ] && {
+				echo "$(($(cat "$h/temp1_input") / 1000))"
+				exit 0
+			}
+			;;
+		esac
+	done
+	# fallback
+	if [ -r /sys/class/thermal/thermal_zone0/temp ]; then
+		echo "$(($(cat /sys/class/thermal/thermal_zone0/temp) / 1000))"
+	else
+		echo "0"
+	fi
+	;;
+
+battery)
+	b="/sys/class/power_supply/$BAT"
+	[ -d "$b" ] || {
+		echo ''
+		exit 0
+	}
+	cap=$(cat "$b/capacity")
+	case "$(cat "$b/status")" in
+	Charging) echo "C ${cap}%" ;;
+	Full | "Not charging") echo "P ${cap}%" ;;
+	*) echo "${cap}%" ;;
+	esac
+	;;
+
+battery-time)
+	b="/sys/class/power_supply/$BAT"
+	[ -d "$b" ] || {
+		echo ''
+		exit 0
+	}
+	if [ -r "$b/energy_now" ] && [ -r "$b/power_now" ]; then
+		now=$(cat "$b/energy_now")
+		full=$(cat "$b/energy_full")
+		rate=$(cat "$b/power_now")
+	elif [ -r "$b/charge_now" ] && [ -r "$b/current_now" ]; then
+		now=$(cat "$b/charge_now")
+		full=$(cat "$b/charge_full")
+		rate=$(cat "$b/current_now")
+	else
+		echo "--:--"
+		exit 0
+	fi
+	[ "${rate:-0}" -gt 0 ] || {
+		echo "--:--"
+		exit 0
+	}
+	case "$(cat "$b/status")" in
+	Charging) left=$(((full - now) * 3600 / rate)) ;;
+	*) left=$((now * 3600 / rate)) ;;
+	esac
+	printf '%d:%02d\n' "$((left / 3600))" "$(((left % 3600) / 60))"
+	;;
+
+idle)
+	case "$(cat /proc/$(pgrep -x swayidle)/stat 2>/dev/null | awk '{print $3}')" in
+	T) echo "Idle off" ;;
+	*) echo "Idle on" ;;
+	esac
+	;;
+
+idle-toggle)
+	p=$(pgrep -x swayidle) || exit 0
+	case "$(awk '{print $3}' "/proc/$p/stat")" in
+	T) kill -CONT "$p" ;;
+	*) kill -STOP "$p" ;;
+	esac
+	eww update idle="$("$0" idle)"
+	;;
+volume-level)
+	if [ "$(pactl get-sink-mute @DEFAULT_SINK@ 2>/dev/null | awk '{print $2}')" = "yes" ]; then
+		echo 0
+	else
+		pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null |
+			awk 'NR==1 {gsub(/%/,"",$5); print $5; exit}' || echo 0
+	fi
+	;;
+
+osd)
+	eww open volume-osd --duration 1.5s \
+		--arg screen="$(niri msg -j focused-output | jq -r .name)"
+	;;
+
+*)
+	echo "usage: $0 {workspaces|window|mpris|volume|wlan|eth|cpu|mem|temp|battery|battery-time|idle|idle-toggle|volume-level|osd}" >&2
+	exit 1
+	;;
+esac
