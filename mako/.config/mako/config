@@ -5,3 +5,4 @@ border-size=1
 border-color=#7eb8da
 border-radius=0
 default-timeout=5000
+max-visible=-1
