@@ -37,6 +37,7 @@ alias cp='cp -i'
 alias lvi='NVIM_APPNAME=lazyvim nvim'
 alias nvc='NVIM_APPNAME=nvchad nvim'
 alias eclean-kernel='eclean-kernel -A'
+alias alpha='ssh root@alpha'
 
 # ccache
 export PATH="/usr/lib/ccache/bin${PATH:+:}${PATH}"
@@ -263,10 +264,6 @@ dbrk() (
 
 spawn() {
     niri msg action spawn -- "$(realpath "$1")" ${@:2}
-}
-
-alpha() {
-    ssh alpha -t sudo TERM=xterm tmux
 }
 
 export PATH="$PATH:/home/hskim/.foundry/bin"
