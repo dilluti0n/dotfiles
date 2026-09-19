@@ -15,12 +15,21 @@ if [[ $- != *i* ]] ; then
 fi
 
 # Put your fun stuff here.
+
+ps1() {
+        local l=$?
+        if (( l != 0 )); then
+                echo -n "$l "
+        fi
+        echo -n '$ '
+}
+PS1='$(ps1)'
+
 export HISTCONTROL="ignoreboth"
 export HISTSIZE="99999"
 export FZF_DEFAULT_COMMAND='fd --type file'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-export PS1='[\u@\h \[\e[32m\]\W\[\e[m\]]\$ '
 export EDITOR='emacsclient -ca vi'
 
 alias mv='mv -i'
