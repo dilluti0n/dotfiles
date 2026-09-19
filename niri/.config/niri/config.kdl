@@ -125,24 +125,20 @@ binds {
     Mod+6 { focus-workspace 6; }
 
     // volume/brightness
-    XF86AudioMicMute allow-when-locked=true {
-        spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle";
+    XF86AudioRaiseVolume allow-when-locked=true {
+        spawn "wpctl" "set-volume" "-l" "1.0" "@DEFAULT_AUDIO_SINK@" "5%+"
     }
     XF86AudioLowerVolume allow-when-locked=true {
-        spawn "swayosd-client" "--output-volume" "lower";
+        spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"
     }
     XF86AudioMute allow-when-locked=true {
-        spawn "swayosd-client" "--output-volume" "mute-toggle";
+        spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"
     }
-    XF86AudioRaiseVolume allow-when-locked=true {
-        spawn "swayosd-client" "--output-volume" "raise";
+    XF86AudioMicMute allow-when-locked=true {
+        spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"
     }
-    XF86MonBrightnessDown allow-when-locked=true {
-        spawn "swayosd-client" "--brightness" "lower";
-    }
-    XF86MonBrightnessUp allow-when-locked=true {
-        spawn "swayosd-client" "--brightness" "raise";
-    }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "set" "+5%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
 
     Mod+Backspace { spawn "swaylock"; }
     Mod+Shift+Backspace hotkey-overlay-title="Power off monitors" allow-when-locked=true {
