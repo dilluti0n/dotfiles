@@ -25,17 +25,20 @@
 (defwidget volume []
   (button :class "mod pulseaudio" :onclick "killall -q pavucontrol || pavucontrol &" volume))
 
-(defwidget bzmenu []
-  (button :class "mod bzmenu" :onclick "bzmenu -l bemenu &" "Bzmenu"))
-
 (defwidget wlan []
-  (button :class "mod network" :onclick "killall -q iwgtk || iwgtk &" {net.wlan}))
+  (button :class {net.rt == "wlan" ? "mod network active" : "mod network"}
+          :onclick "killall -q iwgtk || iwgtk &"
+          {net.wlan != "" ? net.wlan : "N/A"}))
 
 (defwidget eth []
-  (box :class "mod network" :visible {net.eth != ""} (label :text {net.eth})))
+  (box :class {net.rt == "eth" ? "mod network active" : "mod network"}
+       :visible {net.eth != ""}
+       (label :text {net.eth})))
 
 (defwidget wg []
-  (box :class "mod network" :visible {net.wg != ""} (label :text {net.wg})))
+  (box :class {net.rt == "wg" ? "mod vpn active" : "mod vpn"}
+       :visible {net.wg != ""}
+       (label :text {net.wg})))
 
 (defwidget cpu []  (label :class "mod cpu"  :text "${round(EWW_CPU.avg, 0)}%"))
 (defwidget mem []  (label :class "mod memory" :text "${round(EWW_RAM.used_mem_perc, 0)}%"))

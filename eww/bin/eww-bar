@@ -70,26 +70,25 @@ volume)
 	;;
 net-listen)
 	emit() {
-		wlan="N/A"
+		wlan=
 		for d in /sys/class/net/*/wireless; do
 			[ -e "$d" ] || continue
-			iface=$(basename "$(dirname "$d")")
-			ssid=$(iw dev "$iface" link 2>/dev/null | sed -n 's/^[[:space:]]*SSID: //p')
-			wlan=${ssid:-N/A}
+			wlan_if=$(basename "$(dirname "$d")")
+			wlan=$(iw dev "$wlan_if" link 2>/dev/null | sed -n 's/^[[:space:]]*SSID: //p')
 			break
 		done
 
-		eth=""
+		eth= eth_if=
 		for d in /sys/class/net/*; do
-			iface=${d##*/}
-			[ "$iface" = lo ] && continue
+			eth_if=${d##*/}
+			[ "$eth_if" = lo ] && continue
 			[ -e "$d/wireless" ] && continue
 			[ -e "$d/device" ] || continue
 			{ read -r type < "$d/type"; } 2>/dev/null || continue
 			[ "$type" = 1 ] || continue
 			{ read -r state < "$d/operstate"; } 2>/dev/null || continue
 			[ "$state" = up ] || continue
-			eth="$iface"
+			eth="$eth_if"
 			break
 		done
 
@@ -105,7 +104,18 @@ net-listen)
 		done
 		wg="${wgs[*]}"
 
-		out=$(jq -cn --arg w "$wlan" --arg e "$eth" --arg g "$wg" '{wlan:$w,eth:$e,wg:$g}')
+		rt= rt_if=
+		read -r _ _ _ _ rt_if _ < <(ip route show default 2>/dev/null)
+		if [[ -n $rt_if ]]; then
+			if [[ $rt_if == "$wlan_if" ]]; then
+				rt=wlan
+			elif [[ $rt_if == "$eth_if" ]]; then
+				rt=eth
+			fi
+		fi
+
+		out=$(jq -cn --arg r "$rt" --arg w "$wlan" --arg e "$eth" --arg g "$wg" \
+			 '{rt:$r,wlan:$w,eth:$e,wg:$g}')
 		[ "$out" = "$last" ] && return
 		last=$out
 		printf '%s\n' "$out"
@@ -113,7 +123,7 @@ net-listen)
 
 	last=
 	emit
-	stdbuf -oL ip monitor link 2>/dev/null | while read -r _; do emit; done
+	stdbuf -oL ip monitor link route 2>/dev/null | while read -r _; do emit; done
 	;;
 idle)
 	case "$(cat /proc/$(pgrep -x swayidle)/stat 2>/dev/null | awk '{print $3}')" in
