@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -u
 
@@ -93,7 +93,19 @@ net-listen)
 			break
 		done
 
-		out=$(jq -cn --arg w "$wlan" --arg e "$eth" '{wlan:$w,eth:$e}')
+		wgs=()
+		for d in /sys/class/net/*; do
+			[[ -e $d/uevent ]] || continue
+			devtype=
+			while read -r line; do
+				[[ $line == DEVTYPE=* ]] && { devtype=${line#DEVTYPE=}; break; }
+			done < "$d/uevent"
+			[[ $devtype == wireguard ]] || continue
+			wgs+=("${d##*/}")
+		done
+		wg="${wgs[*]}"
+
+		out=$(jq -cn --arg w "$wlan" --arg e "$eth" --arg g "$wg" '{wlan:$w,eth:$e,wg:$g}')
 		[ "$out" = "$last" ] && return
 		last=$out
 		printf '%s\n' "$out"

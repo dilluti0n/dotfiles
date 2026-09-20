@@ -34,6 +34,9 @@
 (defwidget eth []
   (box :class "mod network" :visible {net.eth != ""} (label :text {net.eth})))
 
+(defwidget wg []
+  (box :class "mod network" :visible {net.wg != ""} (label :text {net.wg})))
+
 (defwidget cpu []  (label :class "mod cpu"  :text "${round(EWW_CPU.avg, 0)}%"))
 (defwidget mem []  (label :class "mod memory" :text "${round(EWW_RAM.used_mem_perc, 0)}%"))
 (defwidget temp []
@@ -71,7 +74,7 @@
 
 (defwidget right []
   (box :space-evenly false :spacing 8 :halign "end"
-       (volume) (wlan) (eth) (cpu) (mem) (temp) (battery) (idle) (tray) (clock)))
+       (volume) (wg) (wlan) (eth) (cpu) (mem) (temp) (battery) (idle) (tray) (clock)))
 
 (defwidget bar-content [screen]
   (centerbox :class "bar" :orientation "h"
