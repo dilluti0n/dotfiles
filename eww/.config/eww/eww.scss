@@ -16,11 +16,13 @@ $alert:   #aa3333;
   padding: 0;
 }
 
-.bar {
+.tt, .bar {
   background-color: $bg;
   color: $fg;
   padding: 0;
 }
+
+.tt { padding: 0 3px; }
 
 .mod {
   padding: 0 5px;   // dwm lrpad/2
