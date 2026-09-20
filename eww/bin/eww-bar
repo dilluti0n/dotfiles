@@ -144,7 +144,7 @@ osd)
 	;;
 
 *)
-	echo "usage: $0 {workspaces|window|mpris|volume|wlan|eth|cpu|mem|temp|battery|battery-time|idle|idle-toggle|volume-level|osd}" >&2
+	echo "usage: eww-bar {workspaces|window|mpris|volume|net-listen|idle|idle-toggle|volume-level|osd}" >&2
 	exit 1
 	;;
 esac
