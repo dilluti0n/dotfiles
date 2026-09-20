@@ -35,20 +35,18 @@ window)
 	;;
 
 mpris)
-	if ! command -v playerctl >/dev/null 2>&1; then
-		echo ''
-		exec sleep infinity
-	fi
-	echo ''
-	playerctl --follow --format '{{playerName}}|{{status}}' metadata 2>/dev/null |
-		while IFS='|' read -r player status; do
-			if [ -z "$player" ]; then
-				echo ''
-			elif [ "$status" = "Paused" ]; then
-				echo "P $player"
-			else
-				echo "$player"
-			fi
+	US=$'\x1f'
+	last=
+	playerctl metadata -p playerctld -Ff "{{status}}${US}{{artist}}${US}{{title}}" 2>/dev/null |
+		while IFS="$US" read -r status artist title; do
+			case "$status" in
+			Playing) out="$title" ;;
+			Paused)  out="P $title" ;;
+			*)       out='' ;;
+			esac
+			[ "$out" = "$last" ] && continue
+			last=$out
+			printf '%s\n' "$out"
 		done
 	;;
 
