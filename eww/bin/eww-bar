@@ -77,22 +77,30 @@ volume)
 		esac
 	done
 	;;
+net-listen)
+	emit() {
+		if [ -e "/sys/class/net/$WLAN_IF" ]; then
+			ssid=$(iw dev "$WLAN_IF" link 2>/dev/null | sed -n 's/^[[:space:]]*SSID: //p')
+			wlan=${ssid:-N/A}
+		else
+			wlan="N/A"
+		fi
 
-wlan)
-	if [ ! -e "/sys/class/net/$WLAN_IF" ]; then
-		echo "N/A"
-		exit 0
-	fi
-	ssid=$(iw dev "$WLAN_IF" link 2>/dev/null | sed -n 's/^[[:space:]]*SSID: //p')
-	[ -n "$ssid" ] && echo "$ssid" || echo "N/A"
-	;;
+		if [ "$(cat "/sys/class/net/$ETH_IF/operstate" 2>/dev/null)" = "up" ]; then
+			eth="$ETH_IF"
+		else
+			eth=""
+		fi
 
-eth)
-	if [ "$(cat "/sys/class/net/$ETH_IF/operstate" 2>/dev/null)" = "up" ]; then
-		echo "Eth $ETH_IF"
-	else
-		echo ''
-	fi
+		out=$(jq -cn --arg w "$wlan" --arg e "$eth" '{wlan:$w,eth:$e}')
+		[ "$out" = "$last" ] && return
+		last=$out
+		printf '%s\n' "$out"
+	}
+
+	last=
+	emit
+	stdbuf -oL ip monitor link 2>/dev/null | while read -r _; do emit; done
 	;;
 idle)
 	case "$(cat /proc/$(pgrep -x swayidle)/stat 2>/dev/null | awk '{print $3}')" in
@@ -100,7 +108,6 @@ idle)
 	*) echo "Idle on" ;;
 	esac
 	;;
-
 idle-toggle)
 	p=$(pgrep -x swayidle) || exit 0
 	case "$(awk '{print $3}' "/proc/$p/stat")" in

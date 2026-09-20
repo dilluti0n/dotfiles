@@ -1,12 +1,11 @@
 ;; -*- mode: lisp -*-
 
 (deflisten all-workspaces :initial "[]" "eww-bar workspaces")
-(deflisten window     :initial ""   "eww-bar window")
-(deflisten mpris      :initial ""   "eww-bar mpris")
-(deflisten volume     :initial ""   "eww-bar volume")
+(deflisten window :initial "" "eww-bar window")
+(deflisten mpris :initial "" "eww-bar mpris")
+(deflisten volume :initial "" "eww-bar volume")
+(deflisten net :initial "" "eww-bar net-listen")
 
-(defpoll wlan     :interval "5s"  :initial "N/A" "eww-bar wlan")
-(defpoll eth      :interval "5s"  :initial "" "eww-bar eth")
 (defpoll idle     :interval "5s"  :initial "Idle off" "eww-bar idle")
 
 (defwidget workspaces [screen]
@@ -30,10 +29,10 @@
   (button :class "mod bzmenu" :onclick "bzmenu -l bemenu &" "Bzmenu"))
 
 (defwidget wlan []
-  (button :class "mod network" :onclick "killall -q iwgtk || iwgtk &" wlan))
+  (button :class "mod network" :onclick "killall -q iwgtk || iwgtk &" {net.wlan}))
 
 (defwidget eth []
-  (box :class "mod network" :visible {eth != ""} (label :text eth)))
+  (box :class "mod network" :visible {net.eth != ""} (label :text {net.eth})))
 
 (defwidget cpu []  (label :class "mod cpu"  :text "${round(EWW_CPU.avg, 0)}%"))
 (defwidget mem []  (label :class "mod memory" :text "${round(EWW_RAM.used_mem_perc, 0)}%"))
