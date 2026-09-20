@@ -7,12 +7,7 @@
 
 (defpoll wlan     :interval "5s"  :initial "N/A" "eww-bar wlan")
 (defpoll eth      :interval "5s"  :initial "" "eww-bar eth")
-(defpoll battery  :interval "5s"  :initial "" "eww-bar battery")
-(defpoll battime  :interval "30s" :initial "" "eww-bar battery-time")
 (defpoll idle     :interval "5s"  :initial "Idle off" "eww-bar idle")
-(defpoll clock    :interval "10s" :initial "" "date '+%Y-%m-%d | %H:%M'")
-
-(defvar bat-alt false)
 
 (defwidget workspaces [screen]
   (box :class "workspaces"
@@ -53,8 +48,8 @@
            :text "${EWW_TEMPS.THINKPAD_CPU} °C")))
 
 (defwidget battery []
-  (button :class "mod battery" :onclick "eww update bat-alt=${!bat-alt}"
-          {bat-alt ? battime : battery}))
+  (label :class "mod battery"
+         :text "${EWW_BATTERY?.BAT0?.status == 'Charging' ? 'C' : EWW_BATTERY?.BAT0?.status == 'Discharging' ? '' : 'P'} ${round(EWW_BATTERY?.BAT0?.capacity ?: 0, 0)}%"))
 
 (defwidget idle []
   (button :class {idle == "Idle off" ? "mod idle activated" : "mod idle"}
@@ -64,7 +59,8 @@
 (defwidget tray []
   (systray :class "mod tray" :icon-size 11 :spacing 8 :space-evenly false :prepend-new false))
 
-(defwidget clock [] (label :class "mod clock" :text clock))
+(defwidget clock []
+  (label :class "mod clock" :text {formattime(EWW_TIME, "%Y-%m-%d | %H:%M")}))
 
 (defwidget left [screen]
   (box :space-evenly false :spacing 8 :halign "start"
