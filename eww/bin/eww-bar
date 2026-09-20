@@ -2,23 +2,17 @@
 
 set -u
 
-emit_workspaces() {
-	niri msg --json workspaces 2>/dev/null | jq -c '
+case "${1:-}" in
+
+workspaces)
+	emit_workspaces() {
+		niri msg --json workspaces 2>/dev/null | jq -c '
 		sort_by(.output, .idx)
 		| map({idx: .idx,
 		       output: .output,
 		       name: (if .name == null then (.idx|tostring) else .name end),
 		       active: .is_active})' 2>/dev/null || echo '[]'
-}
-
-emit_window() {
-	niri msg --json focused-window 2>/dev/null |
-		jq -r 'if . == null then "" else (.title // "") end' 2>/dev/null || echo ''
-}
-
-case "${1:-}" in
-
-workspaces)
+	}
 	emit_workspaces
 	niri msg --json event-stream | while IFS= read -r ev; do
 		case "$ev" in
@@ -28,6 +22,10 @@ workspaces)
 	;;
 
 window)
+	emit_window() {
+		niri msg --json focused-window 2>/dev/null |
+			jq -r 'if . == null then "" else (.title // "") end' 2>/dev/null || echo ''
+	}
 	emit_window
 	niri msg --json event-stream | while IFS= read -r ev; do
 		case "$ev" in
