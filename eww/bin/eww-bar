@@ -2,8 +2,6 @@
 
 set -u
 
-WLAN_IF=wlan0
-ETH_IF=enp1s0f0
 BAT=BAT0
 STATE="${XDG_RUNTIME_DIR:-/tmp}/eww-bar"
 
@@ -79,18 +77,28 @@ volume)
 	;;
 net-listen)
 	emit() {
-		if [ -e "/sys/class/net/$WLAN_IF" ]; then
-			ssid=$(iw dev "$WLAN_IF" link 2>/dev/null | sed -n 's/^[[:space:]]*SSID: //p')
+		wlan="N/A"
+		for d in /sys/class/net/*/wireless; do
+			[ -e "$d" ] || continue
+			iface=$(basename "$(dirname "$d")")
+			ssid=$(iw dev "$iface" link 2>/dev/null | sed -n 's/^[[:space:]]*SSID: //p')
 			wlan=${ssid:-N/A}
-		else
-			wlan="N/A"
-		fi
+			break
+		done
 
-		if [ "$(cat "/sys/class/net/$ETH_IF/operstate" 2>/dev/null)" = "up" ]; then
-			eth="$ETH_IF"
-		else
-			eth=""
-		fi
+		eth=""
+		for d in /sys/class/net/*; do
+			iface=${d##*/}
+			[ "$iface" = lo ] && continue
+			[ -e "$d/wireless" ] && continue
+			[ -e "$d/device" ] || continue
+			{ read -r type < "$d/type"; } 2>/dev/null || continue
+			[ "$type" = 1 ] || continue
+			{ read -r state < "$d/operstate"; } 2>/dev/null || continue
+			[ "$state" = up ] || continue
+			eth="$iface"
+			break
+		done
 
 		out=$(jq -cn --arg w "$wlan" --arg e "$eth" '{wlan:$w,eth:$e}')
 		[ "$out" = "$last" ] && return
