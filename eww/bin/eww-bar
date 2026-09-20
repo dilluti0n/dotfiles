@@ -45,20 +45,20 @@ mpris)
 			if [ -z "$player" ]; then
 				echo ''
 			elif [ "$status" = "Paused" ]; then
-				echo "Mpris $player (PAUSED)"
+				echo "P $player"
 			else
-				echo "Mpris $player"
+				echo "$player"
 			fi
 		done
 	;;
 
 volume)
 	emit_volume() {
+		vol=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | awk 'NR==1 {print $5}')
 		if [ "$(pactl get-sink-mute @DEFAULT_SINK@ 2>/dev/null | awk '{print $2}')" = "yes" ]; then
-			echo "Muted"
+			echo "M $vol"
 		else
-			pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null |
-				awk 'NR==1 {print "V " $5}'
+			echo "V $vol"
 		fi
 	}
 	emit_volume
