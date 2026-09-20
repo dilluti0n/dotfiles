@@ -2,11 +2,6 @@
 
 set -u
 
-BAT=BAT0
-STATE="${XDG_RUNTIME_DIR:-/tmp}/eww-bar"
-
-mkdir -p "$STATE"
-
 emit_workspaces() {
 	niri msg --json workspaces 2>/dev/null | jq -c '
 		sort_by(.output, .idx)
