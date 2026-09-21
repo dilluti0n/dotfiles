@@ -1,27 +1,4 @@
-spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE"
-spawn-sh-at-startup "/usr/libexec/xdg-desktop-portal-gtk"
-spawn-sh-at-startup "/usr/libexec/xdg-desktop-portal -r"
-spawn-sh-at-startup "swaybg -m fit -i $HOME/Images/wallpapers/rei.jpg -c '#000000'"
-spawn-sh-at-startup "fcitx5 -d"
-spawn-sh-at-startup "waybar"
-spawn-sh-at-startup "swayosd-server"
-spawn-sh-at-startup "mako"
-//spawn-sh-at-startup "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"
-spawn-sh-at-startup "gsettings set org.gnome.desktop.interface font-name 'Inter 10'"
-spawn-sh-at-startup "gsettings set org.gnome.desktop.interface document-font-name 'Inter 10'"
-spawn-sh-at-startup "gsettings set org.gnome.desktop.interface monospace-font-name 'Cascadia Code 10'"
-spawn-sh-at-startup "gsettings set org.gnome.desktop.interface cursor-theme Adwaita"
-spawn-sh-at-startup "gentoo-pipewire-launcher"
-spawn-at-startup "swayidle" "-w" \
-   "timeout" "300" "swaylock -f" \
-   "timeout" "600" "niri msg action power-off-monitors" \
-   "resume" "niri msg action power-on-monitors" \
-   "before-sleep" "swaylock -f"
-spawn-at-startup "wlsunset"
-spawn-at-startup "gpg-connect-agent" "updatestartuptty" "/bye"
-spawn-at-startup "poweralertd"
-spawn-sh-at-startup "eww daemon && eww-subscribe-monitor"
-spawn-sh-at-startup "RUST_LOG=info chzzkd >/dev/null 2>>$HOME/.local/state/chzzkd.log"
+spawn-at-startup "~/.config/niri/startup.sh"
 
 //prefer-no-csd
 
