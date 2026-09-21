@@ -11,9 +11,9 @@
 (defwidget workspaces [screen]
   (box :class "workspaces"
        (for ws in {jq(all-workspaces,'[.[] | select(.output == "' + screen + '")] | sort_by(.idx)')}
-            (button :onclick "niri msg action focus-workspace ${ws.name}"
-                    :class {ws.active ? "ws active" : "ws"}
-                    "${ws.idx}"))))
+            (eventbox :onclick "niri msg action focus-workspace ${ws.name}"
+                      :cursor "pointer"
+                      (box :class {ws.active ? "ws active" : "ws"} "${ws.idx}")))))
 
 (defwidget mpris []
   (eventbox :onclick "playerctl play-pause"
@@ -26,12 +26,15 @@
   (label :class "mod window" :text window :limit-width 80 :truncate true))
 
 (defwidget volume []
-  (button :class "mod pulseaudio" :onclick "killall -q pavucontrol || pavucontrol &" volume))
+  (eventbox :onclick "killall -q pavucontrol || pavucontrol &"
+            :cursor "pointer"
+            (box :class "mod pulseaudio" volume)))
 
 (defwidget wlan []
-  (button :class {net.rt == "wlan" ? "mod network active" : "mod network"}
-          :onclick "killall -q iwgtk || iwgtk &"
-          {net.wlan != "" ? net.wlan : "N/A"}))
+  (eventbox :onclick "killall -q iwgtk || iwgtk &"
+            :cursor "pointer"
+            (box :class {net.rt == "wlan" ? "mod network active" : "mod network"}
+                 {net.wlan != "" ? net.wlan : "N/A"})))
 
 (defwidget eth []
   (box :class {net.rt == "eth" ? "mod network active" : "mod network"}
@@ -60,9 +63,9 @@
          :text "${EWW_BATTERY?.BAT0?.status == 'Charging' ? 'C' : EWW_BATTERY?.BAT0?.status == 'Discharging' ? '' : 'P'} ${round(EWW_BATTERY?.BAT0?.capacity ?: 0, 0)}%"))
 
 (defwidget idle []
-  (button :class {idle == "Idle off" ? "mod idle activated" : "mod idle"}
-          :onclick "eww-bar idle-toggle"
-          idle))
+  (eventbox :onclick "eww-bar idle-toggle"
+            :cursor "pointer"
+            (box :class {idle == "Idle off" ? "mod idle activated" : "mod idle"} idle)))
 
 (defwidget tray []
   (systray :class "mod tray" :icon-size 11 :spacing 8 :space-evenly false :prepend-new false))
