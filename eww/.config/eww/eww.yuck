@@ -16,8 +16,11 @@
                     "${ws.idx}"))))
 
 (defwidget mpris []
-  (box :class "mod mpris" :visible {mpris != ""}
-       (label :text mpris :limit-width 25 :truncate true)))
+  (eventbox :onclick "playerctl play-pause"
+            :cursor "pointer"
+            :visible {mpris != ""}
+            (box :class "mod mpris"
+                 (label :text mpris :limit-width 25 :truncate true))))
 
 (defwidget window []
   (label :class "mod window" :text window :limit-width 80 :truncate true))
