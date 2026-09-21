@@ -21,6 +21,39 @@ workspaces)
 	done
 	;;
 
+columns)
+	niri msg -j event-stream | jq -cn --unbuffered '
+	def key: tostring;
+	foreach inputs as $e ({w: {}, o: null};
+		.p = .o
+		| if $e.WindowsChanged then
+			.w = ($e.WindowsChanged.windows | map({key: (.id|key), value: .}) | from_entries)
+		  elif $e.WindowOpenedOrChanged then
+			($e.WindowOpenedOrChanged.window) as $x
+			| (if $x.is_focused then .w |= map_values(.is_focused = false) else . end)
+			| .w[$x.id|key] = $x
+		  elif $e.WindowClosed then
+			del(.w[$e.WindowClosed.id|key])
+		  elif $e.WindowFocusChanged then
+			($e.WindowFocusChanged.id) as $f
+			| .w |= map_values(.is_focused = (.id == $f))
+		  elif $e.WindowLayoutsChanged then
+			reduce $e.WindowLayoutsChanged.changes[] as [$id, $l] (.;
+				if .w[$id|key] then .w[$id|key].layout = $l else . end)
+		  else . end
+		| ([.w[] | select(.is_focused)][0]) as $fw
+		| .o = (if $fw == null then [] else
+			[.w[] | select(.workspace_id == $fw.workspace_id
+				       and .layout.pos_in_scrolling_layout != null)]
+			| group_by(.layout.pos_in_scrolling_layout[0])
+			| map(sort_by(.layout.pos_in_scrolling_layout[1])
+				| (map(select(.is_focused))[0] // .[0]) as $t
+				| {i: (($t.app_id // "?") | split(".") | last | .[0:1] | ascii_upcase),
+				  f: any(.is_focused)})
+		  end);
+		select(.o != .p) | .o)'
+	;;
+
 window)
 	emit_window() {
 		niri msg --json focused-window 2>/dev/null |
@@ -41,8 +74,8 @@ mpris)
 		while IFS="$US" read -r status artist title; do
 			case "$status" in
 			Playing) out="$title" ;;
-			Paused)  out="P $title" ;;
-			*)       out='' ;;
+			Paused)	 out="P $title" ;;
+			*)	 out='' ;;
 			esac
 			[ "$out" = "$last" ] && continue
 			last=$out

@@ -1,7 +1,8 @@
 ;; -*- mode: lisp -*-
 
 (deflisten all-workspaces :initial "[]" "eww-bar workspaces")
-(deflisten window :initial "" "eww-bar window")
+(deflisten columns :initial "[]" "eww-bar columns")
+;; (deflisten window :initial "" "eww-bar window")
 (deflisten mpris :initial "" "eww-bar mpris")
 (deflisten volume :initial "" "eww-bar volume")
 (deflisten net :initial "" "eww-bar net-listen")
@@ -22,8 +23,8 @@
             (box :class "mod mpris"
                  (label :text mpris :limit-width 25 :truncate true))))
 
-(defwidget window []
-  (label :class "mod window" :text window :limit-width 80 :truncate true))
+;; (defwidget window []
+;;   (label :class "mod window" :text window :limit-width 80 :truncate true))
 
 (defwidget volume []
   (eventbox :onclick "killall -q pavucontrol || pavucontrol &"
@@ -35,6 +36,12 @@
             :cursor "pointer"
             (box :class {net.rt == "wlan" ? "mod network active" : "mod network"}
                  {net.wlan != "" ? net.wlan : "N/A"})))
+
+(defwidget columns []
+  (box :class "mod columns" :space-evenly false :spacing 2
+       (for c in columns
+            (label :class {c.f ? "col active" : "col"}
+                   :text {c.i}))))
 
 (defwidget eth []
   (box :class {net.rt == "eth" ? "mod network active" : "mod network"}
@@ -79,7 +86,7 @@
 
 (defwidget center []
   (box :space-evenly false :halign "center"
-       (window)))
+       (columns)))
 
 (defwidget right []
   (box :space-evenly false :spacing 8 :halign "end"
