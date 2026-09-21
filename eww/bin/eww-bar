@@ -29,7 +29,7 @@ window)
 	emit_window
 	niri msg --json event-stream | while IFS= read -r ev; do
 		case "$ev" in
-		*Window* | *Workspace*) emit_window ;;
+		*WindowFocusChanged* | *WindowOpenedOrChanged*) emit_window ;;
 		esac
 	done
 	;;
