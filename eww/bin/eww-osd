@@ -1,0 +1,43 @@
+#!/bin/sh
+bl=$(echo /sys/class/backlight/*)
+max=$(cat "$bl/max_brightness")
+
+vol_state() {
+	wpctl get-volume @DEFAULT_AUDIO_SINK@ |
+		awk '{ printf "%d %s", $2 * 100 + 0.5, ($3 == "[MUTED]") ? "true" : "false" }'
+}
+
+prev_vol=$(vol_state)
+prev_bri=$(( $(cat "$bl/brightness") * 100 / max ))
+timer=
+
+{
+	pactl subscribe | grep --line-buffered "'change' on sink" | sed -u 's/.*/vol/' &
+	udevadm monitor --kernel --subsystem-match=backlight | grep --line-buffered change | sed -u 's/.*/bri/' &
+	wait
+} | while read -r ev; do
+	case $ev in
+	vol)
+		cur=$(vol_state)
+		[ "$cur" = "$prev_vol" ] && continue
+		prev_vol=$cur
+		set -- $cur
+		eww update osd_kind=vol osd_value="$1" osd_muted="$2"
+		;;
+	bri)
+		cur=$(( $(cat "$bl/brightness") * 100 / max ))
+		[ "$cur" = "$prev_bri" ] && continue
+		prev_bri=$cur
+		eww update osd_kind=bri osd_value="$cur"
+		;;
+	esac
+	scr=$(niri msg --json focused-output | jq -r .name)
+	if ! { [ -n "$timer" ] && kill -0 "$timer" 2>/dev/null && [ "$scr" = "$open_scr" ]; }; then
+		eww close osd >/dev/null 2>&1
+		eww open osd --screen "$scr" >/dev/null 2>&1
+		open_scr=$scr
+	fi
+	[ -n "$timer" ] && kill "$timer" 2>/dev/null
+	( sleep 0.5; eww close osd >/dev/null ) &
+	timer=$!
+done

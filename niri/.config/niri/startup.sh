@@ -21,7 +21,10 @@ usbnotifyd &
 # ui
 swaybg -m fit -i "$HOME/Images/wallpapers/rei.jpg" -c '#000000' &
 wlsunset &
-{ eww daemon && eww-subscribe-monitor; } &
+eww daemon && {
+        eww-subscribe-monitor &
+        eww-osd &
+}
 
 swayidle -w \
     timeout 300 'swaylock -f' \

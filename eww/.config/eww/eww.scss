@@ -67,3 +67,23 @@ $alert:   #aa3333;
 window {
   background-color: $bg;
 }
+
+$border: #444444;  // col_gray2
+
+.osd {
+  background-color: $bg;
+  color: $fg;
+  border: 1px solid $sel_bg;
+  padding: 4px 8px;
+}
+
+.osd-icon { color: $sel_fg; min-width: 3em; }
+
+.osd-bar {
+  trough   { min-width: 150px; min-height: 4px; background-color: $border; }
+  progress { min-height: 4px; background-color: $sel_bg; }
+
+  &.muted progress { background-color: $alert; }
+}
+
+.osd-num { color: $sel_fg; min-width: 3em; }

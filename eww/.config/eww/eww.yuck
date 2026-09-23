@@ -103,3 +103,19 @@
   :exclusive true
   :namespace "eww-bar"
   (bar-content :screen screen))
+
+(defvar osd_kind "vol")
+(defvar osd_value 0)
+(defvar osd_muted false)
+
+(defwindow osd
+  :monitor 0
+  :geometry (geometry :y "80px" :anchor "bottom center")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  (box :class "osd" :space-evenly false
+    (progress :class "osd-bar" :valign "center" :orientation "h" :value osd_value
+              :visible {!(osd_kind == "vol" && osd_muted)})
+    (label :class "osd-mute" :text "M"
+           :visible {osd_kind == "vol" && osd_muted})))
