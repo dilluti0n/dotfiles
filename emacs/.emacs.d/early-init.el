@@ -1,3 +1,5 @@
+;;; early-init.el --- -*- lexical-binding: t -*-
+
 (defun add-path (name)
   (setenv "PATH" (concat (concat (getenv "PATH") ":") name))
   (setq exec-path (append exec-path (list name))))
