@@ -14,7 +14,7 @@ gentoo-pipewire-launcher &
 fcitx5 -d
 mako &
 poweralertd &
-mute-led &
+#mute-led &
 usbnotifyd &
 
 # ui
