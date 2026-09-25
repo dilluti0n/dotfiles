@@ -13,7 +13,6 @@ gpg-connect-agent updatestartuptty /bye
 gentoo-pipewire-launcher &
 fcitx5 -d
 mako &
-swayosd-server &
 poweralertd &
 mute-led &
 usbnotifyd &
