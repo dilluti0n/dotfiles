@@ -20,7 +20,7 @@ usbnotifyd &
 
 # ui
 swaybg -m fit -i "$HOME/Images/wallpapers/rei.jpg" -c '#000000' &
-wlsunset &
+wlsunset -l 37.5 -L 127.0 &
 eww daemon && {
         eww-subscribe-monitor &
         eww-osd &
