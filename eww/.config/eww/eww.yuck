@@ -17,7 +17,9 @@
                       (box :class {ws.active ? "ws active" : "ws"} "${ws.idx}")))))
 
 (defwidget mpris []
-  (eventbox :onclick "playerctl play-pause"
+  (eventbox :onclick "playerctl -p playerctld play-pause"
+            :onrightclick "playerctld shift"
+            :onscroll "[ {} = up ] && playerctld unshift || playerctld shift"
             :cursor "pointer"
             :visible {mpris != ""}
             (box :class "mod mpris"
