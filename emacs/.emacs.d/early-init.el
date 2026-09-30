@@ -7,16 +7,12 @@
 (when (eq system-type 'darwin)
   (add-path "/usr/local/bin"))
 
-(defun load-if-exists (file-name)
-  "load file if exists"
-  (if (file-exists-p file-name) (load file-name)))
-
 (setq gc-cons-threshold (* 32 1024 1024))
 
 (add-path (concat (getenv "HOME") "/.cargo/bin"))
 
 ;; sensitive keys
-(load-if-exists (expand-file-name "env.el" user-emacs-directory))
+(load (expand-file-name "env.el" user-emacs-directory) t t)
 
 ;; Disable ime
 (setenv "XMODIFIERS" "@im=none")

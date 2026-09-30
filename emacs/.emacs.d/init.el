@@ -558,7 +558,7 @@ Return non-nil if successful, nil otherwise."
 ;; (global-set-key (kbd "C-x c v") 'vterm-other-window)
 
 ;; custom.el
-(load-if-exists custom-file)
+(load custom-file t t)
 (put 'dired-find-alternate-file 'disabled nil)
 
 (require 'server)
