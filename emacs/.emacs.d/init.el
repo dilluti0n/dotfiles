@@ -153,64 +153,40 @@ Return non-nil if successful, nil otherwise."
                    :diagnostics (:experimental (:enable t))))))
 
 ;;
-;; completion settings (completion <- fussy with fzf-native backend <- orderless)
+;; completion
+;;   minibuffer: vertico + fussy(fzf-native)
+;;   in-buffer:  company + fussy, (untouched) eglot
 ;;
-(ensure-require 'orderless)
-(setq completion-category-overrides
-      '((file (styles partial-completion))
-        (consult-grep (styles orderless))
-        (consult-fd (styles orderless)))
-      completion-category-defaults nil ;; Disable defaults, use our settings
-      ;; Emacs 31: partial-completion behaves like substring
-      completion-pcm-leading-wildcard t)
 
-(ensure-require 'fussy)
-(fussy-setup)
-(setq fussy-filter-default-styles '(orderless)) ;; complation-style -> fussy -> orderless
-(fussy-company-setup)
-(fussy-eglot-setup)
-
-;; set fzf-native for fussy backend
-;; TODO: use package-vc-install
 (unless (package-installed-p 'fzf-native)
   (package-vc-install "https://github.com/dangduc/fzf-native.git"))
-(require 'fzf-native)
-(setq fzf-native-always-compile-module t)
-(setq fussy-score-fn 'fussy-fzf-native-score)
-(fzf-native-load-dyn)
+(ensure-require 'fussy)
+(fussy-setup-fzf)
+(fussy-company-setup)
+(setq completion-styles '(fussy basic)
+      completion-category-overrides '((file (styles partial-completion)))
+      completion-pcm-leading-wildcard t)
 
-;; Prompt indicator for `completing-read-multiple'.
-(when (< emacs-major-version 31)
-  (advice-add #'completing-read-multiple :filter-args
-	      (lambda (args)
-		(cons (format "[CRM%s] %s"
-			      (string-replace "[ \t]*" "" crm-separator)
-			      (car args))
-		      (cdr args)))))
-
-;;
-;; completion frontends (vertico, company)
-;;
 (ensure-require 'vertico)
 (vertico-mode)
 (setq enable-recursive-minibuffers t
-      minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
-(setq minibuffer-default-prompt-format " [%s]")
+      minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt)
+      minibuffer-default-prompt-format " [%s]")
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
 (ensure-require 'marginalia)
 (marginalia-mode)
 
 (ensure-require 'consult)
-;; (keymap-global-set "C-x b" 'consult-buffer)
-(keymap-global-set "C-c C-s" 'consult-grep)
+(keymap-global-set "C-c C-s" #'consult-grep)
 
 (ensure-require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'after-init-hook #'global-company-mode)
 (setq company-minimum-prefix-length 1
       company-idle-delay 0
-      company-show-numbers nil
       company-tooltip-align-annotations nil
       company-require-match 'never)
+
 ;;
 ;; Mail
 ;;
