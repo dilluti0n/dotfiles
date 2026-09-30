@@ -37,8 +37,12 @@
 	  (lambda ()
 	    (display-line-numbers-mode t)))
 
-(global-set-key (kbd "C-x c c") 'compile)
+(global-set-key (kbd "C-x c c") 'project-compile)
 (global-set-key (kbd "C-x c r") 'recompile)
+
+(with-eval-after-load 'project
+  (add-to-list 'project-vc-extra-root-markers ".project-root")
+  (add-to-list 'project-vc-extra-root-markers "Cargo.lock"))
 
 ;; tree-sitter
 (setopt treesit-enabled-modes
@@ -66,14 +70,6 @@
 
 (dolist (hook '(c-ts-mode-hook c++-ts-mode-hook))
   (add-hook hook #'subword-mode))
-
-;; compile
-(with-eval-after-load 'compile
-  (add-to-list 'compilation-error-regexp-alist-alist
-               '(rustc-arrow
-                 "^\\s-*--> \\([^:\n]+\\):\\([0-9]+\\):\\([0-9]+\\)"
-                 1 2 3))
-  (add-to-list 'compilation-error-regexp-alist 'rustc-arrow))
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
