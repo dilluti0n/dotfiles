@@ -25,11 +25,7 @@
 (savehist-mode 1)
 (add-to-list 'default-frame-alist '(font . "Cascadia Code-12"))
 
-;; tab is 8 spaces !!!!
-(setq tab-width 8)
-
 (setq-default show-trailing-whitespace nil)
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; tramp
 (setq remote-file-name-inhibit-cache nil
@@ -39,9 +35,7 @@
 ;; default hooks
 (add-hook 'prog-mode-hook
 	  (lambda ()
-	    (display-line-numbers-mode t)
-	    (setq-local indent-tabs-mode (memq major-mode
-					       '(c-mode c-ts-mode c++-mode c++-ts-mode)))))
+	    (display-line-numbers-mode t)))
 
 (global-set-key (kbd "C-x c c") 'compile)
 (global-set-key (kbd "C-x c r") 'recompile)
@@ -104,12 +98,22 @@
 	   (sh-base-mode . bash-ts-mode)))
   (add-to-list 'major-mode-remap-alist mapping))
 
+
+;; editorconfig
+(setq editorconfig-lisp-use-default-indent t)
+(editorconfig-mode 1)
+(with-eval-after-load 'editorconfig
+  (add-to-list 'editorconfig-indentation-alist
+               (cons 'kdl-mode
+                     (lambda (size)
+                       (list (cons 'indent-line-function
+                                   (lambda () (kdl-indent-line size))))))))
+
 ;; cc-mode c-ts-mode c++-ts-mode
-(setq-default c-basic-offset tab-width
-	      c-default-style '((awk-mode . "awk")
+(setq-default c-default-style '((awk-mode . "awk")
 				(other . "linux"))
-	      c-ts-mode-indent-style 'linux)
-(setq-default c-ts-mode-indent-offset c-basic-offset)
+	      c-ts-mode-indent-style 'linux
+              c-ts-mode-indent-offset 8)
 
 (dolist (hook '(c-ts-mode-hook c++-ts-mode-hook))
   (add-hook hook #'subword-mode))
