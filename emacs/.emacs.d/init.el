@@ -99,14 +99,10 @@ Return non-nil if successful, nil otherwise."
 	(package-install-if-not package)
 	(require feat)))))
 
-;; project.el
-(with-eval-after-load 'project
-  (add-to-list 'project-vc-extra-root-markers ".project-root"))
-
 (ensure-require 'magit)
 
 ;;
-;; eglot settings (with eglot-booster)
+;; eglot settings
 ;;
 (ensure-require 'eglot)
 (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename)
@@ -155,7 +151,7 @@ Return non-nil if successful, nil otherwise."
 ;;
 ;; completion
 ;;   minibuffer: vertico + fussy(fzf-native)
-;;   in-buffer:  company + fussy, (untouched) eglot
+;;   in-buffer:  corfu + fussy, eglot + (untouched)
 ;;
 
 (ensure-require 'fzf-native)
@@ -271,13 +267,6 @@ Return non-nil if successful, nil otherwise."
 
 (ensure-require 'which-func)
 (which-function-mode +1)
-
-(with-eval-after-load 'kdl-mode
-    (defun kdl-indent-line-4 () (kdl-indent-line 4)))
-
-(add-hook 'kdl-mode-hook
-          (lambda ()
-            (setq-local indent-line-function #'kdl-indent-line-4)))
 
 (ensure-require 'ghostel)
 (keymap-global-set "C-x m" 'ghostel)
@@ -404,15 +393,6 @@ Return non-nil if successful, nil otherwise."
     (fill-paragraph nil)))
 
 (define-key global-map "\M-Q" 'unfill-paragraph)
-
-(defun rename-this-file (newname &optional ok-if-already-exists)
-  "Rename currently visiting file"
-  (interactive "FNew name: ")
-  (let ((oldname (buffer-file-name)))
-    (if (not oldname)
-	(error "Buffer is not visiting a file")
-      (rename-file oldname newname ok-if-already-exists)
-      (set-visited-file-name newname))))
 
 (defun fcd (&optional dir)
   "alias fcd='cd $(fd --type=directory --exclude='.git' -H |fzf)'"
