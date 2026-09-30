@@ -158,8 +158,7 @@ Return non-nil if successful, nil otherwise."
 ;;   in-buffer:  company + fussy, (untouched) eglot
 ;;
 
-(unless (package-installed-p 'fzf-native)
-  (package-vc-install "https://github.com/dangduc/fzf-native.git"))
+(ensure-require 'fzf-native)
 (ensure-require 'fussy)
 (fussy-setup-fzf)
 (fussy-company-setup)
@@ -180,12 +179,18 @@ Return non-nil if successful, nil otherwise."
 (ensure-require 'consult)
 (keymap-global-set "C-c C-s" #'consult-grep)
 
-(ensure-require 'company)
-(add-hook 'after-init-hook #'global-company-mode)
-(setq company-minimum-prefix-length 1
-      company-idle-delay 0
-      company-tooltip-align-annotations nil
-      company-require-match 'never)
+(ensure-require 'corfu)
+(setq corfu-auto t
+      corfu-auto-delay 0.01 ;; same with company-idle-delay 0
+      corfu-auto-prefix 1
+      corfu-cycle t)
+(global-corfu-mode)
+(fussy-corfu-setup)
+
+(ensure-require 'cape)
+(add-hook 'completion-at-point-functions
+          (cape-capf-super #'cape-dabbrev #'cape-keyword))  ; dabbrev-code + keywords
+(add-hook 'completion-at-point-functions #'cape-file)       ; files (This one is first)
 
 ;;
 ;; Mail
