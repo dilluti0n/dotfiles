@@ -334,11 +334,10 @@ Return non-nil if successful, nil otherwise."
 (global-set-key "\C-x\C-a" 'alpha-toggle)
 
 ;; terminal
-(defun open-st-in-workdir ()
+(defun open-foot-in-workdir ()
   (interactive)
-  (call-process-shell-command
-   (concat "setsid st -c bash -i -c cd " (expand-file-name default-directory)) nil 0))
-(global-set-key (kbd "C-x c t") 'open-st-in-workdir)
+  (call-process "foot" nil 0))
+(global-set-key (kbd "C-x c t") 'open-foot-in-workdir)
 
 ;; copy pwd to kill ring
 (defun copy-pwd-to-kill-ring ()
