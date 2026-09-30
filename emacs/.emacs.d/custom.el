@@ -23,7 +23,7 @@
             :key [105])))
  '(package-selected-packages
    '(async bash-completion cape company consult corfu crux elfeed forge
-           fussy fzf fzf-native ghostel gptel gruvbox-theme kdl-mode
+           fussy fzf fzf-native ghostel gruvbox-theme kdl-mode
            marginalia orderless ox-hugo rg solidity-mode undo-tree
            vertico))
  '(package-vc-selected-packages
