@@ -227,7 +227,10 @@ Return non-nil if successful, nil otherwise."
 (setopt erc-modules (cons 'sasl erc-modules))
 
 (setq erc-auth-source-server-function nil
-      erc-auth-source-join-function nil)
+      erc-auth-source-join-function nil
+      erc-hide-list '("JOIN" "PART" "QUIT" "NICK")
+      erc-track-exclude-types '("JOIN" "PART" "QUIT" "NICK" "MODE" "333" "353")
+      erc-fill-function #'erc-fill-wrap)
 
 ;; Tell soju I am detached
 (setq erc-kill-channel-hook
