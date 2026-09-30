@@ -195,9 +195,9 @@ Return non-nil if successful, nil otherwise."
 ;; Mail
 ;;
 
-(setq mail-user-agent 'mu4e-user-agent
-      message-mail-user-agent 'mu4e-user-agent
-      read-mail-command 'mu4e)
+(setq mail-user-agent 'notmuch-user-agent
+      message-mail-user-agent t
+      read-mail-command 'notmuch)
 
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/notmuch")
 (require 'notmuch)
