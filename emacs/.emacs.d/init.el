@@ -192,6 +192,9 @@ Return non-nil if successful, nil otherwise."
           (cape-capf-super #'cape-dabbrev #'cape-keyword))  ; dabbrev-code + keywords
 (add-hook 'completion-at-point-functions #'cape-file)       ; files (This one is first)
 
+(with-eval-after-load 'git-commit
+  (remove-hook 'git-commit-setup-hook #'git-commit-setup-capf))
+
 ;;
 ;; Mail
 ;;
