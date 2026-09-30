@@ -224,8 +224,7 @@ Return non-nil if successful, nil otherwise."
 (ensure-require 'erc)
 (ensure-require 'erc-services)
 
-(add-to-list 'erc-modules 'sasl 'autojoin)
-(erc-update-modules)
+(setopt erc-modules (cons 'sasl erc-modules))
 
 (defun start-erc ()
   (interactive)
