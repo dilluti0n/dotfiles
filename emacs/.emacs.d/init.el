@@ -229,6 +229,13 @@ Return non-nil if successful, nil otherwise."
 (setq erc-auth-source-server-function nil
       erc-auth-source-join-function nil)
 
+;; Tell soju I am detached
+(setq erc-kill-channel-hook
+      (list (lambda ()
+              (when (erc-server-process-alive)
+                (erc-server-send
+                 (format "PART %s :detach" (erc-default-target)))))))
+
 (defun start-erc ()
   (interactive)
   (let ((erc-sasl-mechanism 'plain)
