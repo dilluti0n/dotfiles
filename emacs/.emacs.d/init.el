@@ -226,18 +226,13 @@ Return non-nil if successful, nil otherwise."
 
 (setopt erc-modules (cons 'sasl erc-modules))
 
-(setq erc-autojoin-timing 'ident
-      erc-autojoin-channels-alist
-      (copy-tree '((Libera.Chat "#gentoo" "#gentoo-guru" "#libssh"
-                                "#bitcoin" "#bitcoin-core-dev"
-                                "#emacs" "#plan9" "##math"))))
 (defun start-erc ()
   (interactive)
   (let ((erc-sasl-mechanism 'plain)
-        (erc-sasl-user "dilluti0n")
-        (erc-sasl-password (auth-source-pass-get 'secret "hskim/irc.libera.chat")))
-    (erc-tls :server "irc.libera.chat" :port 6697
-             :nick "dilluti0n" :user "dilluti0n")))
+        (erc-sasl-user "hskim/libera")
+        (erc-sasl-password (auth-source-pass-get 'secret "hskim/misc/soju")))
+    (erc-tls :server "irc.dilluti0n.com" :port 6697
+             :nick "dilluti0n" :user "hskim/libera" :id 'Libera.Chat)))
 
 ;;
 ;; miscellaneous
