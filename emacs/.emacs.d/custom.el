@@ -21,10 +21,10 @@
      (:name "inbox" :query "path:alpha/INBOX/** AND NOT tag:deleted"
             :key [105])))
  '(package-selected-packages
-   '(async bash-completion cape company consult corfu crux eglot-booster
-           elfeed forge fussy fzf fzf-native ghostel gptel
-           gruvbox-theme kdl-mode keycast marginalia orderless ox-hugo
-           rg solidity-mode undo-tree vertico))
+   '(async bash-completion cape company consult corfu crux elfeed forge
+           fussy fzf fzf-native ghostel gptel gruvbox-theme kdl-mode
+           keycast marginalia orderless ox-hugo rg solidity-mode
+           undo-tree vertico))
  '(package-vc-selected-packages
    '((fzf-native :vc-backend Git :url
                  "https://github.com/dangduc/fzf-native.git")

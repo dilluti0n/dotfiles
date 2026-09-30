@@ -151,12 +151,6 @@ Return non-nil if successful, nil otherwise."
                                 :parameterHints (:enable t))
                    :diagnostics (:experimental (:enable t))))))
 
-(unless (package-installed-p 'eglot-booster)
-  (package-vc-install "https://github.com/jdtsmith/eglot-booster.git"))
-(with-demoted-errors "Eglot-booster error: %S"
-  (require 'eglot-booster)
-  (eglot-booster-mode))                 ;This is fail when emacs-lsp-booster executable is not available
-
 ;;
 ;; completion settings (completion <- fussy with fzf-native backend <- orderless)
 ;;
