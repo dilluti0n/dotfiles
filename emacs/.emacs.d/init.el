@@ -21,7 +21,8 @@
 (column-number-mode t)
 (recentf-mode 1)
 (save-place-mode 1)
-(setq history-length 25)
+(setq history-length 1000
+      savehist-additional-variables '(search-ring regexp-search-ring))
 (savehist-mode 1)
 (add-to-list 'default-frame-alist '(font . "Cascadia Code-12"))
 
@@ -157,7 +158,6 @@ Return non-nil if successful, nil otherwise."
 (ensure-require 'fzf-native)
 (ensure-require 'fussy)
 (fussy-setup-fzf)
-(fussy-company-setup)
 (setq completion-styles '(fussy basic)
       completion-category-overrides '((file (styles partial-completion)))
       completion-pcm-leading-wildcard t)
@@ -313,7 +313,7 @@ Return non-nil if successful, nil otherwise."
 
 ;; custom functions
 ;; alpha
-(setq-default m/default-alpha 90)
+(defvar m/default-alpha 90)
 (add-to-list 'default-frame-alist '(alpha-background . 100))
 
 (defun alpha-set (value)
