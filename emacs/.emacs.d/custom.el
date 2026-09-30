@@ -6,7 +6,8 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(gruvbox))
  '(custom-safe-themes
-   '("d5fd482fcb0fe42e849caba275a01d4925e422963d1cd165565b31d3f4189c87"
+   '("f2f7fbafdb70d61c6018a6d902b0f1420400da4d25397a79d0096b36d5a79307"
+     "d5fd482fcb0fe42e849caba275a01d4925e422963d1cd165565b31d3f4189c87"
      default))
  '(notmuch-saved-searches
    '((:name "unread" :query "tag:unread AND path:alpha/**" :key [117])
@@ -23,8 +24,8 @@
  '(package-selected-packages
    '(async bash-completion cape company consult corfu crux elfeed forge
            fussy fzf fzf-native ghostel gptel gruvbox-theme kdl-mode
-           keycast marginalia orderless ox-hugo rg solidity-mode
-           undo-tree vertico))
+           marginalia orderless ox-hugo rg solidity-mode undo-tree
+           vertico))
  '(package-vc-selected-packages
    '((fzf-native :vc-backend Git :url
                  "https://github.com/dangduc/fzf-native.git")
