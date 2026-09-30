@@ -175,6 +175,7 @@ window-rule {
 }
 
 window-rule {
+    match app-id="com.saivert.pwvucontrol"
     match app-id="org.pulseaudio.pavucontrol"
     match app-id="org.twosheds.iwgtk"
     default-column-width { proportion 0.33333; }

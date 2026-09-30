@@ -14,12 +14,12 @@ gentoo-pipewire-launcher &
 fcitx5 -d
 mako &
 poweralertd &
-#mute-led &
+mute-led &
 usbnotifyd &
 
 # ui
 swaybg -m fit -i "$HOME/Images/wallpapers/rei.jpg" -c '#000000' &
-wlsunset -l 37.5 -L 127.0 &
+wlsunset -l 37.5 -L 127.0 -t 5500 &
 eww daemon && {
         eww-subscribe-monitor &
         eww-osd &
