@@ -232,13 +232,6 @@ Return non-nil if successful, nil otherwise."
       erc-track-exclude-types '("JOIN" "PART" "QUIT" "NICK" "MODE" "333" "353")
       erc-fill-function #'erc-fill-wrap)
 
-;; Tell soju I am detached
-(setq erc-kill-channel-hook
-      (list (lambda ()
-              (when (erc-server-process-alive)
-                (erc-server-send
-                 (format "PART %s :detach" (erc-default-target)))))))
-
 (defun start-erc ()
   (interactive)
   (let ((erc-sasl-mechanism 'plain)
