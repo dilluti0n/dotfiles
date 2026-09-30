@@ -226,6 +226,9 @@ Return non-nil if successful, nil otherwise."
 
 (setopt erc-modules (cons 'sasl erc-modules))
 
+(setq erc-auth-source-server-function nil
+      erc-auth-source-join-function nil)
+
 (defun start-erc ()
   (interactive)
   (let ((erc-sasl-mechanism 'plain)
