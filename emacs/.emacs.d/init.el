@@ -115,7 +115,8 @@ Return non-nil if successful, nil otherwise."
 (define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
 (define-key flymake-mode-map (kbd "M-p") 'flymake-goto-prev-error)
 (define-key flymake-mode-map (kbd "C-x c b") 'flymake-show-buffer-diagnostics)
-(setq eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider)
+(setq eglot-ignored-server-capabilities
+      '(:documentOnTypeFormattingProvider :semanticTokensProvider)
       eglot-events-buffer-config '(:size 0 :format full))
 (setq eldoc-echo-area-use-multiline-p nil)
 
