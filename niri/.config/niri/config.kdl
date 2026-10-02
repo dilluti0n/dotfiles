@@ -74,6 +74,12 @@ binds {
     Mod+Shift+Ctrl+Left { move-window-to-monitor-left; }
     Mod+Shift+Ctrl+Right { move-window-to-monitor-right; }
 
+    Mod+Alt+h { move-workspace-to-monitor-left; }
+    Mod+Alt+l { move-workspace-to-monitor-right; }
+
+    Mod+Alt+Left  { move-workspace-to-monitor-left; }
+    Mod+Alt+Right { move-workspace-to-monitor-right; }
+
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
 
@@ -144,6 +150,10 @@ input {
 
 output "eDP-1" {
     scale 1.2
+}
+
+output "PNP(BNQ) BenQ LCD B7K00327019" {
+    scale 1.1
 }
 
 output "HP Inc. HP X27q 6CM1500HVD" {
